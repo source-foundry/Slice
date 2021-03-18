@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="font">
+        <file>Monoton-Regular.subset.ttf</file>
+    </qresource>
+</RCC>
