@@ -1,0 +1,7 @@
+{
+  "app_name": "Slice",
+  "version": "0.1.1",
+  "author": "Christopher Simpkins",
+  "main_module": "src/run.py",
+  "license": "GNU General Public License Version 3"
+}
