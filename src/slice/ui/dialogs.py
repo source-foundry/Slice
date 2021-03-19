@@ -14,7 +14,6 @@
 #    along with Slice.  If not, see <https://www.gnu.org/licenses/>.
 
 from fontTools import __version__ as fonttools_version
-
 from PyQt5.QtCore import QDir, Qt
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import (
