@@ -42,4 +42,3 @@ class DragDropLineEdit(QLineEdit):
         self.setText(file_path)
         # call the parent method to load font on UI
         self.parent.load_font(file_path)
-
