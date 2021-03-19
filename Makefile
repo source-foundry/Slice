@@ -53,6 +53,13 @@ run:
 	python src/run.py
 
 
+# ---------------------
+# Source formatting
+# ---------------------
+format:
+	isort src && black src
+
+
 .PHONY: build-image-resource build-font-resource\
 build-macos macos-iconset codesign-macos build-macos-installer\
 run
