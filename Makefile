@@ -54,6 +54,20 @@ win-ico:
           -define icon:auto-resize="256,128,96,64,48,32,16" \
           icons/Icon.ico
 
+
+# -------------------------------
+# PyPI packaging and distribution
+# -------------------------------
+
+clean:
+	- rm dist/*.whl dist/*.tar.gz dist/*.zip
+
+dist-build: clean
+	python3 setup.py sdist bdist_wheel
+
+dist-push:
+	twine upload dist/*.whl dist/*.tar.gz
+
 # ---------------------
 # Testing/debugging
 # ---------------------
