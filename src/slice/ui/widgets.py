@@ -31,19 +31,15 @@ class DragDropLineEdit(QLineEdit):
         self.setPlaceholderText("Drop a variable font here or click the Open button")
 
     def dragEnterEvent(self, e):
-        # mime data types are defined in
-        # https://www.tutorialspoint.com/pyqt5/pyqt5_drag_and_drop.htm
-        if e.mimeData().hasText():
+        if e.mimeData().hasUrls():
             e.accept()
         else:
             e.ignore()
 
     def dropEvent(self, e):
-        cleaned_text = self.clean_file_path(e.mimeData().text())
+        file_path = e.mimeData().urls()[0].toLocalFile()
         # set the text entry area
-        self.setText(cleaned_text)
+        self.setText(file_path)
         # call the parent method to load font on UI
-        self.parent.load_font(cleaned_text)
+        self.parent.load_font(file_path)
 
-    def clean_file_path(self, text):
-        return text.replace("file://", "")
