@@ -73,6 +73,12 @@ $ python src\run.py
 
 ## Usage
 
+1. Drag and drop a variable font file onto the Font Path free text entry area.  Your variable font axis values with min, max, and default settings are shown in the Axis Definitions editor table.
+2. Click the Instance Value fields of the Axis Definitions editor table and set the desired values.  If you leave a field blank, the default value is used.
+3. Edit the Name Table Definitions fields to define the menu names for your slice
+4. If you need to master the bit flags for the font, use the check boxes to select the appropriate bits to set in the font
+5. Click the Slice button and choose in save path in the dialog window that opens.  The status bar in the bottom left corner of the main application window will indicate when your font is ready.
+
 ## Contributing
 
 ## Licenses
