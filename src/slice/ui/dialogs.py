@@ -13,6 +13,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Slice.  If not, see <https://www.gnu.org/licenses/>.
 
+from fontTools import __version__ as fonttools_version
+
 from PyQt5.QtCore import QDir, Qt
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import (
@@ -125,11 +127,11 @@ class SliceAboutDialog(QDialog):
         attributionTextField.setOpenExternalLinks(True)
 
         attributionTextField.setHtml(
-            "<ul>"
-            "<li><p><a href='https://www.riverbankcomputing.com/software/pyqt/'>PyQt5</a> GUI framework</p></li>"
-            "<li><p><a href='https://github.com/fonttools/fonttools'>fontTools</a> Python library</p></li>"
-            "<li><p><a href='https://fonts.google.com/specimen/Monoton'>Monoton typeface</a> by Vernon Adams</p></li>"
-            "</ul>"
+            f"<ul>"
+            f"<li><p><a href='https://www.riverbankcomputing.com/software/pyqt/'>PyQt5</a> GUI framework</p></li>"
+            f"<li><p><a href='https://github.com/fonttools/fonttools'>fontTools</a> library (v{fonttools_version})</p></li>"
+            f"<li><p><a href='https://fonts.google.com/specimen/Monoton'>Monoton typeface</a> by Vernon Adams</p></li>"
+            f"</ul>"
         )
         attributionTextField.setMaximumHeight(100)
         layout.addWidget(attributionTextField)
