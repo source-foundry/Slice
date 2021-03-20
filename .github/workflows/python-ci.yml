@@ -21,6 +21,6 @@ jobs:
           python -c "import sys; print(sys.version)"
           python -c "import struct; print(struct.calcsize('P') * 8)"
       - name: Install testing dependencies and project
-        run: pip install -r -dev-requirements.txt .
+        run: pip install -r dev-requirements.txt .
       - name: Run pytest tests
         run: pytest
