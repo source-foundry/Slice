@@ -9,6 +9,7 @@ from slice.ui.widgets import DragDropLineEdit
 def test_drag_drop_line_edit(qtbot):
     widget1 = QWidget()
     widget2 = DragDropLineEdit(widget1)
+    qtbot.addWidget(widget2)
     # placeholder text
     assert (
         widget2.placeholderText() == "Drop a variable font here or click the Open button"
