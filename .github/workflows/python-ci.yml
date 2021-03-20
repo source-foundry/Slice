@@ -20,7 +20,7 @@ jobs:
         run: |
           python -c "import sys; print(sys.version)"
           python -c "import struct; print(struct.calcsize('P') * 8)"
-      - name: Install testing dependencies and project
-        run: pip install -r dev-requirements.txt .
-      - name: Run pytest tests
-        run: python -m pytest
+      - name: Install testing dependencies
+        run: pip install tox
+      - name: Run tox tests
+        run: tox
