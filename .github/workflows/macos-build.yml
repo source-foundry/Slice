@@ -1,4 +1,4 @@
-name: Python CI
+name: macOS Build
 
 on: [push]
 
@@ -7,10 +7,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [macos-latest]
         python-version: [3.9]
-    env:
-      DISPLAY: ":99.0"
 
     steps:
       - uses: actions/checkout@v2
@@ -22,3 +20,7 @@ jobs:
         run: |
           python -c "import sys; print(sys.version)"
           python -c "import struct; print(struct.calcsize('P') * 8)"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: PyInstaller build
+        run: make build-macos
