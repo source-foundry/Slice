@@ -9,11 +9,6 @@ def get_font_model():
     return FontModel(Path("tests/assets/fonts/Recursive-VF.subset.ttf").resolve())
 
 
-def test_font_model():
-    fm = FontModel("testpath")
-    assert fm.fontpath == "testpath"
-
-
 def test_designaxis_model_default(qtbot, qtmodeltester):
     tableview = QTableView()
     model = DesignAxisModel()
