@@ -1,5 +1,3 @@
-import pytest
-
 from PyQt5.QtWidgets import QTableView
 
 from slice.models import DesignAxisModel, FontModel, FontBitFlagModel, FontNameModel
