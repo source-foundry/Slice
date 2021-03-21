@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QApplication
+from PyQt5.QtWidgets import QWidget
 from PyQt5.QtTest import QTest
 
 from slice.ui.widgets import DragDropLineEdit
