@@ -6,7 +6,7 @@ from PyQt5.QtTest import QTest
 from slice.ui.widgets import DragDropLineEdit
 
 
-def test_drag_drop_line_edit(qtbot):
+def test_drag_drop_line_edit():
     widget1 = QWidget()
     widget2 = DragDropLineEdit(widget1)
     # placeholder text
