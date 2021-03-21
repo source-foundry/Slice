@@ -36,10 +36,22 @@ class SliceBaseTableModel(QAbstractTableModel):
             return False
 
     def rowCount(self, index):
-        return len(self._data)
+        # the index validity check approach addresses the qabstractitemmodel.cpp check:
+        # QtWarningMsg: FAIL! model->hasChildren(topIndex) () returned FALSE (qabstractitemmodeltester.cpp:366)
+        # See https://stackoverflow.com/a/50988188/2848172
+        if index.isValid():
+            return 0
+        else:
+            return len(self._data)
 
     def columnCount(self, index):
-        return len(self._data[0])
+        # the index validity check approach addresses the qabstractitemmodel.cpp check:
+        # QtWarningMsg: FAIL! model->hasChildren(topIndex) () returned FALSE (qabstractitemmodeltester.cpp:366)
+        # See https://stackoverflow.com/a/50988188/2848172
+        if index.isValid():
+            return 0
+        else:
+            return len(self._data[0])
 
     def get_data(self):
         return self._data
@@ -193,13 +205,18 @@ class DesignAxisModel(SliceBaseTableModel):
             return self._h_header[section]
 
     def flags(self, index):
+        # Note: index validity checks in this block address qabstractitemmodeltester error:
+        # QtWarningMsg: FAIL! flags == Qt::ItemIsDropEnabled || flags == 0 () returned FALSE (qabstractitemmodeltester.cpp:329)
+
         # column 0 (axis value range and default) is set
         # to non-editable
-        if index.column() == 0:
+        if index.isValid() and index.column() == 0:
             return super().flags(index) | Qt.ItemIsSelectable
         # column 1 (instance value) is set to editable
-        else:
+        elif index.isValid() and index.column() == 1:
             return super().flags(index) | Qt.ItemIsEditable
+        else:
+            return super().flags(index)
 
     def load_font(self, font_model):
         ttfont = TTFont(font_model.fontpath)

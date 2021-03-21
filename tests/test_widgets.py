@@ -1,14 +1,14 @@
-import pytest
-
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QApplication
 from PyQt5.QtTest import QTest
 
 from slice.ui.widgets import DragDropLineEdit
 
 
-def test_drag_drop_line_edit():
+def test_drag_drop_line_edit(qtbot):
     widget1 = QWidget()
     widget2 = DragDropLineEdit(widget1)
+    qtbot.addWidget(widget1)
+    qtbot.addWidget(widget2)
     # placeholder text
     assert (
         widget2.placeholderText() == "Drop a variable font here or click the Open button"
