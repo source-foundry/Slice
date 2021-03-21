@@ -21,6 +21,6 @@ jobs:
           python -c "import sys; print(sys.version)"
           python -c "import struct; print(struct.calcsize('P') * 8)"
       - name: Install testing dependencies
-        run: python -m pip install --upgrade pip setuptools wheel tox tox-gh-actions
+        run: python -m pip install --upgrade pip setuptools wheel tox tox-gh-actions pytest pytest-qt
       - name: Run tox tests
         run: python -m tox
