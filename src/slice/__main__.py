@@ -56,7 +56,7 @@ from .ui.dialogs import (
 )
 from .ui.widgets import DragDropLineEdit
 
-__VERSION__ = "0.2.0"
+__VERSION__ = "0.2.1"
 
 
 class MainWindow(QMainWindow):
@@ -228,9 +228,7 @@ class MainWindow(QMainWindow):
     #
 
     def setUIAppIconTitle(self):
-        monoton_id = QFontDatabase.addApplicationFont(
-            ":/font/Monoton-Regular.subset.ttf"
-        )
+        monoton_id = QFontDatabase.addApplicationFont(":/font/Monoton-Regular.subset.ttf")
         font_family = QFontDatabase.applicationFontFamilies(monoton_id)[0]
         monoton = QFont(font_family)
         outerHBox = QHBoxLayout()
@@ -517,9 +515,7 @@ class MainWindow(QMainWindow):
         QDesktopServices.openUrl(QUrl("https://github.com/source-foundry/Slice"))
 
     def menu_clicked_updatecheck(self):
-        QDesktopServices.openUrl(
-            QUrl("https://github.com/source-foundry/Slice/releases")
-        )
+        QDesktopServices.openUrl(QUrl("https://github.com/source-foundry/Slice/releases"))
 
     #
     # Button click events

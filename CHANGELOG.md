@@ -1,10 +1,14 @@
 # Changelog
 
+## v0.2.1
+
+- update FontNameModel model flags definitions based on qabstractitemmodel.cpp fails
+
 ## v0.2.0
 
 - update macOS app bundle embedded cPython interpreter to v3.9.2 from v3.8.2
-- update SliceBaseTableModel model row and column count approaches based on qabstractitemmodel.cpp checks
-- update DesignAxisModel model flags definitions based on qabstractitemmodel.cpp checks
+- update SliceBaseTableModel model row and column count approaches based on qabstractitemmodel.cpp fails
+- update DesignAxisModel model flags definitions based on qabstractitemmodel.cpp fails
 
 ## v0.1.3
 
