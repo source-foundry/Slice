@@ -146,8 +146,14 @@ class FontNameModel(SliceBaseTableModel):
             return "Instance Values"
 
     def flags(self, index):
+        # Note: index validity checks in this block address qabstractitemmodeltester error:
+        # QtWarningMsg: FAIL! flags == Qt::ItemIsDropEnabled || flags == 0 () returned FALSE (qabstractitemmodeltester.cpp:329)
+
         # all indices are editable in this table
-        return super().flags(index) | Qt.ItemIsEditable
+        if index.isValid():
+            return super().flags(index) | Qt.ItemIsEditable
+        else:
+            return super().flags(index)
 
     def get_version(self):
         return self.font_version.split(";")[0]
