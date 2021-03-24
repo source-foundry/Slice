@@ -22,6 +22,7 @@ from PyQt5.QtGui import (
     QDesktopServices,
     QFont,
     QFontDatabase,
+    QIcon,
     QImage,
     QKeySequence,
     QPixmap,
@@ -74,6 +75,7 @@ class MainWindow(QMainWindow):
         self.setupThreadPool()
 
         # set up the UI
+        self.setWindowIcon(QIcon(":/img/slice-icon.svg"))
         self.setUIMenuBar()
         self.setUIMainWindow()
         self.setUIMainLayout()
@@ -228,7 +230,9 @@ class MainWindow(QMainWindow):
     #
 
     def setUIAppIconTitle(self):
-        monoton_id = QFontDatabase.addApplicationFont(":/font/Monoton-Regular.subset.ttf")
+        monoton_id = QFontDatabase.addApplicationFont(
+            ":/font/Monoton-Regular.subset.ttf"
+        )
         font_family = QFontDatabase.applicationFontFamilies(monoton_id)[0]
         monoton = QFont(font_family)
         outerHBox = QHBoxLayout()
@@ -515,7 +519,9 @@ class MainWindow(QMainWindow):
         QDesktopServices.openUrl(QUrl("https://github.com/source-foundry/Slice"))
 
     def menu_clicked_updatecheck(self):
-        QDesktopServices.openUrl(QUrl("https://github.com/source-foundry/Slice/releases"))
+        QDesktopServices.openUrl(
+            QUrl("https://github.com/source-foundry/Slice/releases")
+        )
 
     #
     # Button click events
