@@ -16,15 +16,21 @@
 ;   You should have received a copy of the GNU General Public License
 ;   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+#define BUILDPATH "..\..\dist\Slice.exe"
 
 [Setup]
 AppName=Slice
-AppVersion=0.3.0
+AppVersion=GetFileVersion({#BUILDPATH})
+AppPublisher="Christopher Simpkins"
+AppPublisherURL=https://github.com/source-foundry/Slice
+AppReadmeFile=https://github.com/source-foundry/Slice/blob/main/README.md
+AppSupportURL=https://github.com/source-foundry/Slice/issues
+AppUpdatesURL=https://github.com/source-foundry/Slice/releases
+AppCopyright="Copyright 2021 Christopher Simpkins. GPLv3 License"
 WizardStyle=modern
 DefaultDirName={autopf}\Slice
-; Since no icons will be created in "{group}", we don't need the wizard
-; to ask for a Start Menu folder name:
 DisableProgramGroupPage=yes
+SetupIconFile=..\..\icons\Icon.ico
 UninstallDisplayIcon={app}\Slice.exe
 Compression=lzma2
 SolidCompression=yes
@@ -33,7 +39,13 @@ OutputDir=..\..\dist\Windows-Installer
 LicenseFile=..\..\LICENSE
 
 [Files]
-Source: "..\..\dist\Slice.exe"; DestDir: "{app}"
+Source: {#BUILDPATH}; DestDir: "{app}"
+
+[Tasks]
+Name: desktopicon; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
+Name: desktopicon\common; Description: "For all users"; GroupDescription: "Additional icons:"; Flags: exclusive
+Name: desktopicon\user; Description: "For the current user only"; GroupDescription: "Additional icons:"; Flags: exclusive unchecked
 
 [Icons]
 Name: "{autoprograms}\Slice"; Filename: "{app}\Slice.exe"
+Name: "{commondesktop}\Slice"; Filename: "{app}\Slice.exe"; Tasks: desktopicon
