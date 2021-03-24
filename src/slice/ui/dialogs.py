@@ -15,7 +15,7 @@
 
 from fontTools import __version__ as fonttools_version
 from PyQt5.QtCore import QDir, Qt
-from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtGui import QIcon, QImage, QPixmap
 from PyQt5.QtWidgets import (
     QDialog,
     QDialogButtonBox,
@@ -36,6 +36,7 @@ class SliceOpenFileDialog(QFileDialog):
         self.root_directory = QDir.homePath()
 
         self.setWindowTitle("Open File")
+        self.setWindowIcon(QIcon(":/img/slice-icon.svg"))
         # options |= QFileDialog.DontUseNativeDialog
 
         file_path, _ = self.getOpenFileName(
@@ -60,6 +61,7 @@ class SliceSaveFileDialog(QFileDialog):
         self.root_directory = None
 
         self.setWindowTitle("Save File")
+        self.setWindowIcon(QIcon(":/img/slice-icon.svg"))
 
         if root_directory:
             self.root_directory = root_directory
@@ -84,6 +86,9 @@ class SliceSaveFileDialog(QFileDialog):
 class SliceAboutDialog(QDialog):
     def __init__(self, version):
         QDialog.__init__(self)
+
+        self.setWindowTitle("About Slice")
+        self.setWindowIcon(QIcon(":/img/slice-icon.svg"))
 
         QBtn = QDialogButtonBox.Ok
         self.buttonBox = QDialogButtonBox(QBtn)
