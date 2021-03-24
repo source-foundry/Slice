@@ -50,7 +50,7 @@ build-macos-installer:
 # -----------------------
 
 win-ico:
-	magick convert icons/1024.png -alpha off -resize 256x256 \
+	magick convert icons/1024.png -alpha on -resize 256x256 \
           -define icon:auto-resize="256,128,96,64,48,32,16" \
           icons/Icon.ico
 
