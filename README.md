@@ -63,7 +63,7 @@ Launch the installer, acknowledge the license, and follow the instructions.  Whe
 
 Please file issue reports on the [project tracker](https://github.com/source-foundry/Slice/issues).  
 
-Source contributions are welcome.  Please see the [DEVELOPER.md](DEVELOPER.md) documentation for details about how to set up a development environment and test source changes.  Submit a pull request with any changes that you would like to share upstream.
+Source contributions are welcome.  Please see the [DEVELOPER.md](DEVELOPER.md) documentation for instructions on how to set up a development environment and test source changes.  Submit a pull request with any changes that you would like to share upstream.
 
 ## Licenses
 
