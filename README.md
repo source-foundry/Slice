@@ -49,7 +49,7 @@ $ make run
 
 Download the [latest Windows .exe installer](https://github.com/source-foundry/Slice/releases/latest) in our Releases.
 
-Launch the installer, acknowledge the license, and follow the instructions.  When the install process completes, type "Slice" in the Search bar and launch the application (or click the desktop icon if you chose to install it during the installation process).
+Launch the installer, acknowledge the license, and follow the instructions.  When the install process completes, type "Slice" in the Win 10 Search bar and launch the application (or click the desktop icon if you chose to install it during the installation process).
 
 ## Usage
 
