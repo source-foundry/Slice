@@ -28,7 +28,7 @@ Install the required build dependencies with:
 
 ```
 $ source .venv/bin/activate
-$ pip install -r requirements.txt
+$ pip install -r dev-requirements.txt
 ```
 
 Run the application with:
@@ -68,7 +68,7 @@ Install the required build dependencies with:
 
 ```
 $ .\venv\Scripts\activate
-$ pip install -r requirements.txt
+$ pip install -r dev-requirements.txt
 ```
 
 Run the application with:
