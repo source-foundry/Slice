@@ -63,10 +63,10 @@ Launch the installer, acknowledge the license, and follow the instructions.  Whe
 
 Please file issue reports on the [project tracker](https://github.com/source-foundry/Slice/issues).  
 
-Source contributions are welcome.  Fork the repository and submit a pull request with your changes.
+Source contributions are welcome.  Please see the [DEVELOPER.md](DEVELOPER.md) documentation for details about how to set up a development environment and test source changes.  Submit a pull request with any changes that you would like to share upstream.
 
 ## Licenses
 
-The Slice project is licensed under the GNU General Public License version 3. Please see [LICENSE](LICENSE) for details.
+The Slice project is licensed under the GNU General Public License version 3. Please see the [LICENSE](LICENSE) document for details.
 
 Please see the [thirdparty directory](https://github.com/source-foundry/Slice/tree/main/thirdparty) for additional details about third-party licenses.
