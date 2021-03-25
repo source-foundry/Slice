@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.3.0
+
+- add Windows installer support to releases
+- add Inno Setup Windows installer configuration
+- fix: axis value editor table vertical header spacing for all caps axis tags, the axis tag column should now automatically resize to the max width axis tag in the list
+- fix: set the window icon to the Slice icon on Windows views
+- fix: set the About dialog title and icon on Windows views
+- fix: update image conversion approach to maintain alpha transparency in Windows application icon
+
+
 ## v0.2.1
 
 - update FontNameModel model flags definitions based on qabstractitemmodel.cpp fails
