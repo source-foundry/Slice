@@ -1,4 +1,4 @@
-# Slice
+# <img height="36" src="https://raw.githubusercontent.com/source-foundry/Slice/main/src/resources/img/slice-icon.svg"/>  Slice
 
 ## About
 
