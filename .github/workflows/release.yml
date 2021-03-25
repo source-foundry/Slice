@@ -33,7 +33,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Please see the CHANGELOG.md in the root of the repository for the release notes
-          draft: false
+          draft: true
           prerelease: false
       - name: Build and publish to PyPI
         env:
