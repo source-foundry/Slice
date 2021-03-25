@@ -36,6 +36,7 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QGroupBox,
     QHBoxLayout,
+    QHeaderView,
     QLabel,
     QMainWindow,
     QPushButton,
@@ -672,7 +673,11 @@ class MainWindow(QMainWindow):
 
         name_table_was_set = self.name_table_model.load_font(self.font_model)
         axis_value_table_was_set = self.fvar_table_model.load_font(self.font_model)
+
         self.fvar_table_view.resizeColumnToContents(0)
+        self.fvar_table_view.verticalHeader().resizeSections(
+            QHeaderView.ResizeToContents
+        )
 
         # uncheck all bit flag setting check boxes
         self.os2_fsselection_bit_0_checkbox.setChecked(False)
