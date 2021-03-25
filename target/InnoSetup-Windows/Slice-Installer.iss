@@ -17,10 +17,11 @@
 ;   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #define BUILDPATH "..\..\dist\Slice.exe"
+#define SliceVersion "0.3.0"
 
 [Setup]
 AppName=Slice
-AppVersion=GetFileVersion({#BUILDPATH})
+AppVersion={#SliceVersion}
 AppPublisher="Christopher Simpkins"
 AppPublisherURL=https://github.com/source-foundry/Slice
 AppReadmeFile=https://github.com/source-foundry/Slice/blob/main/README.md
@@ -34,7 +35,7 @@ SetupIconFile=..\..\icons\Icon.ico
 UninstallDisplayIcon={app}\Slice.exe
 Compression=lzma2
 SolidCompression=yes
-OutputBaseFilename=Slice-Installer
+OutputBaseFilename=Slice-{#SliceVersion}-Installer
 OutputDir=..\..\dist\Windows-Installer
 LicenseFile=..\..\LICENSE
 
