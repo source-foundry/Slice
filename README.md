@@ -4,7 +4,7 @@
 
 ## About
 
-Slice is a GUI application that takes a variable font and compiles a new custom "slice" of the variable design space with user-defined design axis values.  This output file is commonly known as a "static instance" font in type software developer parlance.  Slice also supports custom font family naming so that you can view output files as different families in application menus.
+Slice is a GUI application that takes a variable font and compiles a new custom "slice" of the variable design space with user-defined design axis values.  This output file is commonly known as a "static instance" font in type software developer parlance.  The application supports custom font family naming so that you can view output files as different families in application menus.
 
 Slice is built with PyQt5 and supports cross-platform use on macOS, Windows, and Linux. Static instance fonts are generated with the [fonttools Python library](https://github.com/fonttools/fonttools).  The application is free software. Please see the Licenses section below for additional details.
 
