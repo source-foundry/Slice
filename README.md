@@ -8,6 +8,8 @@ Slice is a GUI application that takes a variable font and compiles a new custom 
 
 Slice is built with PyQt5 and supports cross-platform use on macOS, Windows, and Linux. Static instance fonts are generated with the [fonttools Python library](https://github.com/fonttools/fonttools).  The application is free software. Please see the Licenses section below for additional details.
 
+If you are a licensed user of a font, please understand your font license before you use this application!
+
 ## Use case examples
 
 - You want to use a font, file size optimization is important, and you only need a small subset of a variable font design space
