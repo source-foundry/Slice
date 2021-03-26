@@ -58,7 +58,7 @@ from .ui.dialogs import (
 )
 from .ui.widgets import DragDropLineEdit
 
-__VERSION__ = "0.3.0"
+__VERSION__ = "0.3.1"
 
 
 class MainWindow(QMainWindow):
@@ -231,9 +231,7 @@ class MainWindow(QMainWindow):
     #
 
     def setUIAppIconTitle(self):
-        monoton_id = QFontDatabase.addApplicationFont(
-            ":/font/Monoton-Regular.subset.ttf"
-        )
+        monoton_id = QFontDatabase.addApplicationFont(":/font/Monoton-Regular.subset.ttf")
         font_family = QFontDatabase.applicationFontFamilies(monoton_id)[0]
         monoton = QFont(font_family)
         outerHBox = QHBoxLayout()
@@ -520,9 +518,7 @@ class MainWindow(QMainWindow):
         QDesktopServices.openUrl(QUrl("https://github.com/source-foundry/Slice"))
 
     def menu_clicked_updatecheck(self):
-        QDesktopServices.openUrl(
-            QUrl("https://github.com/source-foundry/Slice/releases")
-        )
+        QDesktopServices.openUrl(QUrl("https://github.com/source-foundry/Slice/releases"))
 
     #
     # Button click events
@@ -675,9 +671,7 @@ class MainWindow(QMainWindow):
         axis_value_table_was_set = self.fvar_table_model.load_font(self.font_model)
 
         self.fvar_table_view.resizeColumnToContents(0)
-        self.fvar_table_view.verticalHeader().resizeSections(
-            QHeaderView.ResizeToContents
-        )
+        self.fvar_table_view.verticalHeader().resizeSections(QHeaderView.ResizeToContents)
 
         # uncheck all bit flag setting check boxes
         self.os2_fsselection_bit_0_checkbox.setChecked(False)

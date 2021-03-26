@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.3.1
+
+- minor patch for Homebrew distribution testing
+- minor patch for macOS code sign testing
+
 ## v0.3.0
 
 - add Windows installer support to releases
