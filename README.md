@@ -1,10 +1,19 @@
 # <img height="36" src="https://raw.githubusercontent.com/source-foundry/Slice/main/src/resources/img/slice-icon.svg"/>  Slice
 
+### An open-source application to create custom static fonts from variable fonts
+
 ## About
 
-Slice is a GUI application that takes a variable font and compiles a new instance "slice" of the variable design space with user-defined axis values.  It provides an OpenType name table editor to support unique slice names so that artifacts show up in application menus as different families according to the area of the design space that you build.  These builds are called "static instances" in fancy font parlance.
+Slice is a GUI application that takes a variable font and compiles a new custom "slice" of the variable design space with user-defined design axis values.  This output file is commonly known as a "static instance" font in type software developer parlance.  Slice also supports custom font family naming so that the files that you produce with this application show up as different families in application menus.
 
-Slice is built with PyQt5 and supports cross-platform use on macOS, Windows, and Linux. Design space slices are generated with the [fonttools Python library](https://github.com/fonttools/fonttools).  The application is free software. Please see the Licenses section below for additional details.
+Slice is built with PyQt5 and supports cross-platform use on macOS, Windows, and Linux. Static instance fonts are generated with the [fonttools Python library](https://github.com/fonttools/fonttools).  The application is free software. Please see the Licenses section below for additional details.
+
+## Use case examples
+
+- You want to use a font, file size optimization is important, and you only need a small subset of a variable font design space
+- You want to use a font in an application that lacks support for, or only partially supports, the variable font format
+- You want to use fonts that cover different areas of the design space and have different family names for A/B testing
+- You develop type software and want to easily generate multiple static instances of your variable design space to support the client or reviewer review process
 
 ## Installation
 
@@ -61,7 +70,7 @@ Launch the installer, acknowledge the license, and follow the instructions.  Whe
 
 ## Contributing
 
-Please file issue reports on the [project tracker](https://github.com/source-foundry/Slice/issues).  
+Please file issues on the [project tracker](https://github.com/source-foundry/Slice/issues).  
 
 Source contributions are welcome.  Please see the [DEVELOPER.md](DEVELOPER.md) documentation for instructions on how to set up a development environment and test source changes.  Submit a pull request with any changes that you would like to share upstream.
 
