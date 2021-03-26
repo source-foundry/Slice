@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 # Package meta-data.
 NAME = "slicegui"
-DESCRIPTION = "Variable font instance generator PyQt5 GUI application"
+DESCRIPTION = "An open-source, cross-platform GUI app to generate custom static fonts from variable fonts."
 LICENSE = "GNU General Public License v3 (GPLv3)"
 URL = "https://github.com/source-foundry/Slice"
 EMAIL = "chris@sourcefoundry.org"
