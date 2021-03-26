@@ -27,6 +27,8 @@ Download the [latest macOS dmg installer](https://github.com/source-foundry/Slic
 
 Launch the installer and acknowledge the license during the install process. Drag and drop the Slice.app bundle into your Applications directory when the installer prompts you to do so.  Open Launchpad and launch Slice by clicking the icon.
 
+A Homebrew installation approach is in development.  See [#6](https://github.com/source-foundry/Slice/issues/6).
+
 ### [Linux]()
 
 Linux packages are in development.  For now, please use the following instructions.
