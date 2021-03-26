@@ -31,7 +31,9 @@ A Homebrew installation approach is in development.  See [#6](https://github.com
 
 ### [Linux]()
 
-Linux packages are in development.  For now, please use the following instructions.
+Arch Linux users can install the [slice AUR package](https://aur.archlinux.org/packages/slice/).
+Other Linux packages are in development.
+For now, please use the following instructions to run from the sources.
 
 Clone the repository with:
 
