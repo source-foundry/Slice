@@ -40,6 +40,9 @@ build-macos: macos-iconset build-image-resource build-font-resource
 codesign-macos:
 	codesign --deep -s "Christopher Simpkins" dist/Slice.app
 
+codesign-macos-installer:
+	codesign -s "Christopher Simpkins" dist/*.dmg
+
 build-macos-installer:
 	# https://github.com/sindresorhus/create-dmg
 	cd dist && create-dmg --overwrite Slice.app
