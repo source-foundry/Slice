@@ -23,15 +23,36 @@ Install the application on your platform with the following instructions.
 
 ### [macOS]()
 
+#### Install with Homebrew
+
+[Homebrew](https://brew.sh/) users can use our custom tap to install, upgrade, and remove Slice.
+
+Use the following commands to install:
+
+```sh
+$ brew tap source-foundry/taproom
+$ brew update
+$ brew install --cask sourcefoundry-slice
+```
+
+Homebrew will update Slice to new releases during your `brew update && brew upgrade` process or use `brew upgrade sourcefoundry-slice` to upgrade only the Slice application.
+
+Use the following command to uninstall:
+
+```
+$ brew uninstall sourcefoundry-slice
+```
+
+#### Install with dmg Installer
+
 Download the [latest macOS dmg installer](https://github.com/source-foundry/Slice/releases/latest) in our Releases.
 
 Launch the installer and acknowledge the license during the install process. Drag and drop the Slice.app bundle into your Applications directory when the installer prompts you to do so.  Open Launchpad and launch Slice by clicking the icon.
 
-A Homebrew installation approach is in development.  See [#6](https://github.com/source-foundry/Slice/issues/6).
-
 ### [Linux]()
 
 Arch Linux users can install the [slice AUR package](https://aur.archlinux.org/packages/slice/).
+
 Other Linux packages are in development.
 For now, please use the following instructions to run from the sources.
 
