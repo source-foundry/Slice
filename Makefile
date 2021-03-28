@@ -37,15 +37,45 @@ build-macos: macos-iconset build-image-resource build-font-resource
 	pyinstaller --noconfirm "target/PyInstaller-macOS/Slice-macOS.spec"
 	cp LICENSE dist/license.txt
 
-codesign-macos:
-	codesign --deep -s "Christopher Simpkins" dist/Slice.app
-
-codesign-macos-installer:
-	codesign -s "Christopher Simpkins" dist/*.dmg
-
 build-macos-installer:
 	# https://github.com/sindresorhus/create-dmg
-	cd dist && create-dmg --overwrite Slice.app
+	- rm dist/*.dmg
+	cd dist && create-dmg --identity="BOGUS" Slice.app
+
+# -------------------------------------------
+# macOS platform distribution code signatures
+# -------------------------------------------
+
+# code sign the application distribution bundle
+codesign-macos:
+	codesign --deep --timestamp --force --options runtime -s "Developer ID Application: Christopher Simpkins" dist/Slice.app
+
+# verify code signature on the distribution bundle
+verify-codesign-macos:
+	spctl -a -v dist/Slice.app
+
+# code sign the macOS installer
+codesign-macos-installer:
+	codesign --timestamp --force --options runtime -s "Developer ID Application: Christopher Simpkins" dist/*.dmg
+
+upload-macos-installer-for-notarize:
+	# Requires Apple Developer account user name to be exported as the environment variable
+	# APPLDEV_USERNAME before this target is executed
+	# This will prompt for an app-specific password to be entered in stdin
+	xcrun altool --notarize-app --type osx --primary-bundle-id "org.sourcefoundry.slice" --username @env:APPLEDEV_USERNAME --file dist/*.dmg
+
+notarize-macos-installer:
+	# Must export the notarization ID returned by upload-macos-installer-for-notarize
+	# make target before this target is executed
+	xcrun altool --notarization-info @env:SLICE_NOTARIZE_ID --username @env:APPLEDEV_USERNAME
+
+staple-notary-macos:
+	# requires successful notarize-macos-installer step completion
+	xcrun stapler staple -v dist/*.dmg
+
+# verify code signature on the macOS installer
+verify-notarize-macos-installer:
+	spctl -a -t open --context context:primary-signature -v dist/*.dmg
 
 
 # -----------------------
