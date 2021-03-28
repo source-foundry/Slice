@@ -89,8 +89,8 @@ pyinstaller --noconfirm .\target\PyInstaller-Windows\Slice-Windows.spec
 Generate the Windows Inno Setup installer:
 
 - Launch Inno Setup
-- Open the `target\InnoSetup-Windows` ISS configuration file in the application
-- Edit the Slice version string
+- Open the `target\InnoSetup-Windows\Slice-Installer.iss` ISS configuration file in the application
+- Edit the Slice version string in the .iss configuration file
 - Build the installer
 
 The installer file is located on the path `dist\Windows-Installer\Slice-[VERSION]-Installer.exe`.
