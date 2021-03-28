@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.4.0
+
+- add macOS code signed / installer notarization support
+- add new macOS code signing, notarization, and code signing/notary validation make targets
+- add Arch Linux AUR package support and documentation (thanks Caleb!)
+- add Homebrew cask tap install/uninstall/upgrade support and documentation
+- add maintainer docs on path `docs/MAINTAINER.md`
+
 ## v0.3.1
 
 - minor patch for Homebrew distribution testing
