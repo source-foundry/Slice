@@ -35,7 +35,7 @@ $ brew update
 $ brew install --cask sourcefoundry-slice
 ```
 
-Homebrew will update Slice to new releases during your `brew update && brew upgrade` process or use `brew upgrade sourcefoundry-slice` to upgrade only the Slice application.
+Homebrew will update Slice to new releases during the `brew update && brew upgrade` process.  Use `brew upgrade sourcefoundry-slice` to upgrade the Slice application only.
 
 Use the following command to uninstall:
 
