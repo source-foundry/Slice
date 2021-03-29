@@ -21,6 +21,8 @@ jobs:
           python -c "import sys; print(sys.version)"
           python -c "import struct; print(struct.calcsize('P') * 8)"
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install --upgrade pip wheel setuptools
+          pip install -r requirements.txt
       - name: PyInstaller build
         run: make build-macos
