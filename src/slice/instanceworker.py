@@ -77,7 +77,9 @@ class InstanceWorker(QRunnable):
         axis_instance_data = self.axis_model.get_instance_data()
         instantiateVariableFont(self.ttfont, axis_instance_data, inplace=True)
         print("\nAXIS INSTANCE VALUES")
-        print(f"Instantiated variable font with axis definitions:\n{axis_instance_data}")
+        print(
+            f"Instantiated variable font with axis definitions:\n{axis_instance_data}"
+        )
 
     def edit_name_table(self):
         # string, nameID, platformID, platEncID, langID
@@ -136,10 +138,18 @@ class InstanceWorker(QRunnable):
         print(f"nameID3: {self.ttfont['name'].getName(3, *name_record_plat_enc_lang)}")
         print(f"nameID4: {self.ttfont['name'].getName(4, *name_record_plat_enc_lang)}")
         print(f"nameID6: {self.ttfont['name'].getName(6, *name_record_plat_enc_lang)}")
-        print(f"nameID16: {self.ttfont['name'].getName(16, *name_record_plat_enc_lang)}")
-        print(f"nameID17: {self.ttfont['name'].getName(17, *name_record_plat_enc_lang)}")
-        print(f"nameID21: {self.ttfont['name'].getName(21, *name_record_plat_enc_lang)}")
-        print(f"nameID22: {self.ttfont['name'].getName(22, *name_record_plat_enc_lang)}")
+        print(
+            f"nameID16: {self.ttfont['name'].getName(16, *name_record_plat_enc_lang)}"
+        )
+        print(
+            f"nameID17: {self.ttfont['name'].getName(17, *name_record_plat_enc_lang)}"
+        )
+        print(
+            f"nameID21: {self.ttfont['name'].getName(21, *name_record_plat_enc_lang)}"
+        )
+        print(
+            f"nameID22: {self.ttfont['name'].getName(22, *name_record_plat_enc_lang)}"
+        )
 
     def edit_bit_flags(self):
         # edit the OS/2.fsSelection bit flag
@@ -172,4 +182,6 @@ class InstanceWorker(QRunnable):
             f"{self.bit_model.get_head_instance_data()}"
         )
         print(f"Pre head.macStyle:  {num2binary(pre_head_macstyle_int, bits=16)}")
-        print(f"Post head.macStyle: {num2binary(self.ttfont['head'].macStyle, bits=16)}")
+        print(
+            f"Post head.macStyle: {num2binary(self.ttfont['head'].macStyle, bits=16)}"
+        )
