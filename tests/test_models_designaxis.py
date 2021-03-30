@@ -114,9 +114,21 @@ def test_designaxis_model_get_registered_axis_string(qtbot):
     qtbot.addWidget(tableview)
     model.load_font(get_font_model())
 
+    # registered axes
     assert model.get_registered_axis_string("ital") == "Italic"
     assert model.get_registered_axis_string("opsz") == "Optical size"
     assert model.get_registered_axis_string("slnt") == "Slant"
     assert model.get_registered_axis_string("wdth") == "Width"
     assert model.get_registered_axis_string("wght") == "Weight"
-    assert model.get_registered_axis_string("BOGUS") is None
+
+    # unregistered axes
+    assert model.get_registered_axis_string("CASL") == "Casual"
+    assert model.get_registered_axis_string("CRSV") == "Cursive"
+    assert model.get_registered_axis_string("XPRN") == "Expression"
+    assert model.get_registered_axis_string("GRAD") == "Grade"
+    assert model.get_registered_axis_string("MONO") == "Monospace"
+    assert model.get_registered_axis_string("SOFT") == "Softness"
+    assert model.get_registered_axis_string("WONK") == "Wonky"
+
+    # not a known (to this application) axis tag
+    assert model.get_registered_axis_string("ZXYJ") is None

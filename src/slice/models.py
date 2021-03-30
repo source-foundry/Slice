@@ -291,8 +291,21 @@ class DesignAxisModel(SliceBaseTableModel):
             "wdth": "Width",
             "wght": "Weight",
         }
+        # Uses Google Fonts axis registry
+        # https://fonts.google.com/variablefonts#axis-definitions
+        unregistered_axes = {
+            "CASL": "Casual",
+            "CRSV": "Cursive",
+            "XPRN": "Expression",
+            "GRAD": "Grade",
+            "MONO": "Monospace",
+            "SOFT": "Softness",
+            "WONK": "Wonky",
+        }
         if needle in registered_axes:
             return registered_axes[needle]
+        elif needle in unregistered_axes:
+            return unregistered_axes[needle]
         else:
             return None
 
