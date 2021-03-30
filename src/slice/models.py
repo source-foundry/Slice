@@ -210,6 +210,15 @@ class DesignAxisModel(SliceBaseTableModel):
         elif orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return self._h_header[section]
 
+        # add full registered axis strings in tooltips
+        if role == Qt.ToolTipRole:
+            if orientation == Qt.Vertical:
+                axis_name = self.get_registered_axis_string(self._v_header[section])
+                # if this is a defined registered axis value, create a tooltip
+                # with the full axis name
+                if axis_name:
+                    return axis_name
+
     def flags(self, index):
         # Note: index validity checks in this block address qabstractitemmodeltester error:
         # QtWarningMsg: FAIL! flags == Qt::ItemIsDropEnabled || flags == 0 () returned FALSE (qabstractitemmodeltester.cpp:329)
@@ -271,6 +280,19 @@ class DesignAxisModel(SliceBaseTableModel):
         if axistag in self.fvar_axes:
             # field that contains the default axis value
             return self.fvar_axes[axistag][1]
+        else:
+            return None
+
+    def get_registered_axis_string(self, needle):
+        registered_axes = {
+            "ital": "Italic",
+            "opsz": "Optical size",
+            "slnt": "Slant",
+            "wdth": "Width",
+            "wght": "Weight",
+        }
+        if needle in registered_axes:
+            return registered_axes[needle]
         else:
             return None
 

@@ -105,3 +105,18 @@ def test_designaxis_model_get_default_axis_value(qtbot):
     assert model.get_default_axis_value("wght") == 300.0
     assert model.get_default_axis_value("slnt") == 0.0
     assert model.get_default_axis_value("CRSV") == 0.5
+
+
+def test_designaxis_model_get_registered_axis_string(qtbot):
+    tableview = QTableView()
+    model = DesignAxisModel()
+    tableview.setModel(model)
+    qtbot.addWidget(tableview)
+    model.load_font(get_font_model())
+
+    assert model.get_registered_axis_string("ital") == "Italic"
+    assert model.get_registered_axis_string("opsz") == "Optical size"
+    assert model.get_registered_axis_string("slnt") == "Slant"
+    assert model.get_registered_axis_string("wdth") == "Width"
+    assert model.get_registered_axis_string("wght") == "Weight"
+    assert model.get_registered_axis_string("BOGUS") is None
