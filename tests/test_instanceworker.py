@@ -94,6 +94,8 @@ def test_instanceworker_instantiate_ttfont_and_gen_static_instance(tmpdir):
     outpath = str(tmpdir.join("test.ttf"))
     font_model = get_font_model()
 
+    # uses a default model that has no data entry
+    # and should take default values for all axes
     axis_model = DesignAxisModel()
     axis_model.load_font(font_model)
 
@@ -122,6 +124,123 @@ def test_instanceworker_instantiate_ttfont_and_gen_static_instance(tmpdir):
     # after instantiation of the static, fvar should be gone
     iw.instantiate_variable_font()
     assert "fvar" not in iw.ttfont
+
+
+def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_one_axis(tmpdir):
+    outpath = str(tmpdir.join("test.ttf"))
+    font_model = get_font_model()
+
+    axis_model = DesignAxisModel()
+    axis_model.load_font(font_model)
+    # the next step sets the user entered text to a value of "var"
+    # on the "MONO" axis row
+    axis_model._data[0][1] = "var"
+
+    name_model = FontNameModel()
+    name_model.load_font(font_model)
+
+    bit_model = FontBitFlagModel(
+        get_os2_default_dict_true(), get_head_default_dict_true()
+    )
+
+    iw = InstanceWorker(
+        outpath,
+        font_model,
+        axis_model,
+        name_model,
+        bit_model,
+    )
+
+    assert iw.ttfont is None
+    # the ttfont attribute is set with this method
+    iw.instantiate_ttfont()
+    assert type(iw.ttfont) is TTFont
+    # it is a variable font and should have an fvar table
+    assert "fvar" in iw.ttfont
+
+    # after instantiation of the partial, fvar should still be present
+    iw.instantiate_variable_font()
+    assert "fvar" in iw.ttfont
+    # in the test font, the "MONO" axis should still be variable
+    # with the variable setting that was used above
+    assert [a.axisTag for a in iw.ttfont["fvar"].axes] == ["MONO"]
+
+
+def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_multi_axis(tmpdir):
+    outpath = str(tmpdir.join("test.ttf"))
+    font_model = get_font_model()
+
+    axis_model = DesignAxisModel()
+    axis_model.load_font(font_model)
+    # the next step sets the user entered text to a value of "var"
+    # and "variable" on the "MONO" and "wght" axis rows, respectively
+    axis_model._data[0][1] = "var"
+    axis_model._data[2][1] = "variable"
+
+    name_model = FontNameModel()
+    name_model.load_font(font_model)
+
+    bit_model = FontBitFlagModel(
+        get_os2_default_dict_true(), get_head_default_dict_true()
+    )
+
+    iw = InstanceWorker(
+        outpath,
+        font_model,
+        axis_model,
+        name_model,
+        bit_model,
+    )
+
+    assert iw.ttfont is None
+    # the ttfont attribute is set with this method
+    iw.instantiate_ttfont()
+    assert type(iw.ttfont) is TTFont
+    # it is a variable font and should have an fvar table
+    assert "fvar" in iw.ttfont
+
+    # after instantiation of the partial, fvar should still be present
+    iw.instantiate_variable_font()
+    assert "fvar" in iw.ttfont
+    # in the test font, the "MONO" axis should still be variable
+    # with the variable setting that was used above
+    assert [a.axisTag for a in iw.ttfont["fvar"].axes] == ["MONO", "wght"]
+
+
+def test_instanceworker_instantiate_ttfont_raises_valueerror_on_invalid_data(tmpdir):
+    outpath = str(tmpdir.join("test.ttf"))
+    font_model = get_font_model()
+
+    axis_model = DesignAxisModel()
+    axis_model.load_font(font_model)
+    # enters an invalid data entry string of "BOGUSVALUE"
+    # this should raise a ValueError that propagates
+    # to an execution error dialog.
+    axis_model._data[0][1] = "BOGUSVALUE"
+
+    name_model = FontNameModel()
+    name_model.load_font(font_model)
+
+    bit_model = FontBitFlagModel(
+        get_os2_default_dict_true(), get_head_default_dict_true()
+    )
+
+    iw = InstanceWorker(
+        outpath,
+        font_model,
+        axis_model,
+        name_model,
+        bit_model,
+    )
+
+    assert iw.ttfont is None
+    # the ttfont attribute is set with this method
+    iw.instantiate_ttfont()
+    assert type(iw.ttfont) is TTFont
+    # confirm that execution with an invalid value raises ValueError
+    # during attempt to cast to float
+    with pytest.raises(ValueError):
+        iw.instantiate_variable_font()
 
 
 def test_instanceworker_edit_name_table(tmpdir):

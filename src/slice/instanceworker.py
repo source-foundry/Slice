@@ -19,7 +19,12 @@ import traceback
 
 from fontTools.misc.textTools import num2binary
 from fontTools.ttLib.ttFont import TTFont
-from fontTools.varLib.mutator import instantiateVariableFont
+from fontTools.varLib.instancer import (
+    instantiateVariableFont as partial_instantiateVariableFont,
+)
+from fontTools.varLib.mutator import (
+    instantiateVariableFont as static_instantiateVariableFont,
+)
 from PyQt5.QtCore import QObject, QRunnable, pyqtSignal, pyqtSlot
 
 
@@ -75,11 +80,28 @@ class InstanceWorker(QRunnable):
 
     def instantiate_variable_font(self):
         axis_instance_data = self.axis_model.get_instance_data()
-        instantiateVariableFont(self.ttfont, axis_instance_data, inplace=True)
+        axis_tag_number = len(self.ttfont["fvar"].axes)
+        # this is a partial instance request if the number of axis_instance_data
+        # definitions is less than the number of axes in the font
+        is_partial_instance = axis_tag_number > len(axis_instance_data)
+        # Execute the full static or partial instantiation.
+        # The static vs. partial approach is defined by the
+        # axis values contained in the axis_instance_data dict.
+        # When an axis tag is not present, that axis remains variable
+        # in the new font and uses the variable instantiator method
+        if is_partial_instance:
+            partial_instantiateVariableFont(
+                self.ttfont, axis_instance_data, inplace=True, optimize=True
+            )
+        else:
+            static_instantiateVariableFont(
+                self.ttfont, axis_instance_data, inplace=True
+            )
         print("\nAXIS INSTANCE VALUES")
         print(
             f"Instantiated variable font with axis definitions:\n{axis_instance_data}"
         )
+        print(f"Partial instance: {is_partial_instance}")
 
     def edit_name_table(self):
         # string, nameID, platformID, platEncID, langID

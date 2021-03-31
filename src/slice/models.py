@@ -267,12 +267,24 @@ class DesignAxisModel(SliceBaseTableModel):
         # value is cast to a float from a str
         for x, axistag in enumerate(self._v_header):
             axis_value = self._data[x][1]
-            # if user did not define the axis value, then
-            # use the default axis value
             if axis_value == "":
+                # if user did not define the axis value, then
+                # use the default axis value
                 instance_data[axistag] = float(self.get_default_axis_value(axistag))
+            elif axis_value.lower() in ("var", "variable"):
+                # skip the axis if the user requests that it remains
+                # a variable design axis with any casing of "var"
+                # or "variable" text string entry
+                pass
             else:
-                instance_data[axistag] = float(self._data[x][1])
+                # else use the numeric value set in the editor
+                try:
+                    instance_data[axistag] = float(self._data[x][1])
+                except ValueError:
+                    raise ValueError(
+                        f"'{axis_value}' is not a valid {axistag} axis value. "
+                        f"Please enter a valid value and try again."
+                    )
 
         return instance_data
 

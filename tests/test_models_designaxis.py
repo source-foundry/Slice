@@ -48,7 +48,7 @@ def test_designaxis_model_filled(qtbot, qtmodeltester):
     ]
 
 
-def test_designaxis_model_get_instance_data(qtbot):
+def test_designaxis_model_get_static_instance_data(qtbot):
     tableview = QTableView()
     model = DesignAxisModel()
     tableview.setModel(model)
@@ -79,6 +79,45 @@ def test_designaxis_model_get_instance_data(qtbot):
         "CASL": 1.0,
         "wght": 1000.0,
         "slnt": -15.0,
+        "CRSV": 1.0,
+    }
+
+
+def test_designaxis_model_get_partial_instance_data(qtbot):
+    tableview = QTableView()
+    model = DesignAxisModel()
+    tableview.setModel(model)
+    qtbot.addWidget(tableview)
+    model.load_font(get_font_model())
+
+    # without user entered definitions, we should get default
+    # axis values
+    assert model.get_instance_data() == {
+        "MONO": 0.0,
+        "CASL": 0.0,
+        "wght": 300.0,
+        "slnt": 0.0,
+        "CRSV": 0.5,
+    }
+
+    # simulate update of model data with user input
+    # that requests partial instance that maintains
+    # variable "MONO" and "slnt" axes
+    # (i.e. includes "var" and "Variable" definitions)
+    model._data[0][1] = "var"
+    model._data[1][1] = "1.0"
+    model._data[2][1] = "1000.0"
+    model._data[3][1] = "Variable"
+    model._data[4][1] = "1.0"
+    model.layoutChanged.emit()
+
+    # should not include axis tags: "MONO", "slnt"
+    # the instantiation function maintains variable
+    # axes for any axis tag that is present in font
+    # and not included in this dict
+    assert model.get_instance_data() == {
+        "CASL": 1.0,
+        "wght": 1000.0,
         "CRSV": 1.0,
     }
 
