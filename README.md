@@ -107,3 +107,13 @@ Source contributions are welcome.  Please see the [DEVELOPER.md](DEVELOPER.md) d
 The Slice project is licensed under the GNU General Public License version 3. Please see the [LICENSE](LICENSE) document for details.
 
 Please see the [thirdparty directory](https://github.com/source-foundry/Slice/tree/main/thirdparty) for additional details about third-party licenses.
+
+## Acknowledgments
+
+❤️ Slice slices with the fantastic fonttools Python library.
+
+⚡ Slice docs are powered by Netlify.
+
+  <a href="https://www.netlify.com">
+    <img src="https://www.netlify.com/img/global/badges/netlify-light.svg" alt="Deploys by Netlify" />
+  </a>
