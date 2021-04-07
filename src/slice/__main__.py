@@ -231,15 +231,13 @@ class MainWindow(QMainWindow):
     #
 
     def setUIAppIconTitle(self):
-        monoton_id = QFontDatabase.addApplicationFont(
-            ":/font/Monoton-Regular.subset.ttf"
-        )
-        font_family = QFontDatabase.applicationFontFamilies(monoton_id)[0]
-        monoton = QFont(font_family)
+        recursive_id = QFontDatabase.addApplicationFont(":/font/RecursiveSans.ttf")
+        font_family = QFontDatabase.applicationFontFamilies(recursive_id)[0]
+        recursive = QFont(font_family)
         outerHBox = QHBoxLayout()
-        titleLabel = QLabel("<h1>slice</h1>")
+        titleLabel = QLabel("<h1>Slice</h1>")
         titleLabel.setStyleSheet("QLabel { font-size: 36px;}")
-        titleLabel.setFont(monoton)
+        titleLabel.setFont(recursive)
         titleLabel.setAlignment(Qt.AlignLeft | Qt.AlignBottom)
         iconLabel = QLabel()
         # note: commented block below shows how to use

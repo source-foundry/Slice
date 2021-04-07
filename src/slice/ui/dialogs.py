@@ -15,7 +15,7 @@
 
 from fontTools import __version__ as fonttools_version
 from PyQt5.QtCore import QDir, Qt
-from PyQt5.QtGui import QIcon, QImage, QPixmap
+from PyQt5.QtGui import QFont, QFontDatabase, QIcon, QImage, QPixmap
 from PyQt5.QtWidgets import (
     QDialog,
     QDialogButtonBox,
@@ -98,9 +98,12 @@ class SliceAboutDialog(QDialog):
         layout = QVBoxLayout()
 
         title = QLabel("Slice")
-        font = title.font()
-        font.setPointSize(30)
-        title.setFont(font)
+
+        recursive_id = QFontDatabase.addApplicationFont(":/font/RecursiveSans.ttf")
+        font_family = QFontDatabase.applicationFontFamilies(recursive_id)[0]
+        recursive = QFont(font_family)
+        recursive.setPointSize(30)
+        title.setFont(recursive)
 
         layout.addWidget(title)
 
@@ -134,7 +137,7 @@ class SliceAboutDialog(QDialog):
             f"<ul>"
             f"<li><p><a href='https://www.riverbankcomputing.com/software/pyqt/'>PyQt5</a> GUI framework</p></li>"
             f"<li><p><a href='https://github.com/fonttools/fonttools'>fontTools</a> library (v{fonttools_version})</p></li>"
-            f"<li><p><a href='https://fonts.google.com/specimen/Monoton'>Monoton typeface</a> by Vernon Adams</p></li>"
+            f"<li><p><a href='https://www.recursive.design/'>Recursive Sans typeface</a> by Stephen Nixon</p></li>"
             f"</ul>"
         )
         attributionTextField.setMaximumHeight(100)
