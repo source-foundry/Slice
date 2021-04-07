@@ -308,6 +308,12 @@ class MainWindow(QMainWindow):
         axisEditGroupBox.layout().addWidget(self.fvar_table_view)
         axisEditGroupBox.setMinimumHeight(205)
 
+        ibmplex_id = QFontDatabase.addApplicationFont(":/font/IBMPlexMono-Regular.ttf")
+        font_family = QFontDatabase.applicationFontFamilies(ibmplex_id)[0]
+        ibmplex = QFont(font_family)
+        self.fvar_table_view.setFont(ibmplex)
+        self.fvar_table_view.resizeColumnToContents(0)
+
         outerVBox.addWidget(axisEditLabel)
         outerVBox.addWidget(axisEditGroupBox)
         # add to main layout
@@ -323,11 +329,18 @@ class MainWindow(QMainWindow):
         nameTableLabel = QLabel("<h4>Name Table Definitions</h4>")
         nameTableLabel.setStyleSheet("QLabel { padding-left: 5px;}")
         nameTableGroupBox = QGroupBox("")
+
         self.nameTableView = QTableView()
         self.name_table_model = FontNameModel()
         self.nameTableView.setModel(self.name_table_model)
         self.nameTableView.horizontalHeader().setStretchLastSection(True)
         self.nameTableView.setAlternatingRowColors(True)
+
+        ibmplex_id = QFontDatabase.addApplicationFont(":/font/IBMPlexMono-Regular.ttf")
+        font_family = QFontDatabase.applicationFontFamilies(ibmplex_id)[0]
+        ibmplex = QFont(font_family)
+        self.nameTableView.setFont(ibmplex)
+
         nameTableGroupBox.setLayout(QVBoxLayout())
         nameTableGroupBox.layout().addWidget(self.nameTableView)
         nameTableGroupBox.setMinimumHeight(210)
