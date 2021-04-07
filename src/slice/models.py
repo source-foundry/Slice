@@ -143,7 +143,7 @@ class FontNameModel(SliceBaseTableModel):
         if orientation == Qt.Vertical and role == Qt.DisplayRole:
             return self._v_header[section]
         elif orientation == Qt.Horizontal and role == Qt.DisplayRole:
-            return "Instance Values"
+            return "Edit Values"
 
     def flags(self, index):
         # Note: index validity checks in this block address qabstractitemmodeltester error:
@@ -195,7 +195,7 @@ class DesignAxisModel(SliceBaseTableModel):
             "Axis 4",
             "Axis 5",
         ]
-        self._h_header = ["(Min, Max) [Default]", "Instance Values"]
+        self._h_header = ["(Min, Max) [Default]", "Edit Values"]
 
     def data(self, index, role):
         if role in (Qt.DisplayRole, Qt.EditRole):
