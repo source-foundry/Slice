@@ -595,7 +595,7 @@ class MainWindow(QMainWindow):
 
                     # start the worker thread
                     self.threadpool.start(instance_worker)
-                    self.statusbar.showMessage("Slicing instance...")
+                    self.statusbar.showMessage("Slicing...")
                     self.sliceButton.setDisabled(True)
 
                 except Exception as e:
