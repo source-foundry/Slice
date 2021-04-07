@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="font">
         <file alias="RecursiveSans.ttf">RecursiveSans-Slice_mod.subset.ttf</file>
+        <file>IBMPlexMono-Regular.ttf</file>
     </qresource>
 </RCC>
