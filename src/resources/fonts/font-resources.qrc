@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="font">
-        <file>Monoton-Regular.subset.ttf</file>
+        <file alias="RecursiveSans.ttf">RecursiveSans-Slice_mod.subset.ttf</file>
     </qresource>
 </RCC>
