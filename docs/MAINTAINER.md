@@ -100,3 +100,9 @@ Upload installer to [VirusTotal](https://www.virustotal.com/gui/).
 Copy VirusTotal URL and installer SHA256 hash to the GitHub release.
 
 Upload installer to the GitHub release.
+
+## Assets
+
+### Fonts
+
+The Recursive typeface is used for the application GUI title.  The v1.077 variable font was sliced @ MONO=0, CASL=0.5, wght=800, slnt=0, CRSV=1 settings to produce this instance.  It was subsequently subset with the pyftsubset executable to the character set "Slice". 
