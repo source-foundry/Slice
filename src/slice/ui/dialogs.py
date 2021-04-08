@@ -135,9 +135,10 @@ class SliceAboutDialog(QDialog):
 
         attributionTextField.setHtml(
             f"<ul>"
-            f"<li><p><a href='https://www.riverbankcomputing.com/software/pyqt/'>PyQt5</a> GUI framework</p></li>"
-            f"<li><p><a href='https://github.com/fonttools/fonttools'>fontTools</a> library (v{fonttools_version})</p></li>"
-            f"<li><p><a href='https://www.recursive.design/'>Recursive Sans typeface</a> by Stephen Nixon</p></li>"
+            f"<li><p><small><a href='https://www.riverbankcomputing.com/software/pyqt/'>PyQt5</a> GUI framework</small></p></li>"
+            f"<li><p><small><a href='https://github.com/fonttools/fonttools'>fontTools</a> library (v{fonttools_version})</small></p></li>"
+            f"<li><p><small><a href='https://www.recursive.design'>Recursive Sans typeface</a> by Stephen Nixon</small></p></li>"
+            f"<li><p><small><a href='https://github.com/IBM/plex'>IBM Plex Mono typeface</a> by IBM</small></p></li>"
             f"</ul>"
         )
         attributionTextField.setMaximumHeight(100)
