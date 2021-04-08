@@ -179,6 +179,7 @@ class DesignAxisModel(SliceBaseTableModel):
     def __init__(self, *args):
         SliceBaseTableModel.__init__(self, *args)
         self.fvar_axes = {}
+        self.fvar_name_map = {}
         self.ordered_axis_tags = []
         self._data = [
             ["", ""],
@@ -214,8 +215,10 @@ class DesignAxisModel(SliceBaseTableModel):
         if role == Qt.ToolTipRole:
             if orientation == Qt.Vertical:
                 axis_name = self.get_axis_name_string(self._v_header[section])
-                # if this is a defined registered axis value, create a tooltip
-                # with the full axis name
+                # if we receive a axis name string value, create a tooltip
+                # with the full axis name. The method returns None if the
+                # axis name is not available.  Skip tooltip gen if that is
+                # the case
                 if axis_name:
                     return axis_name
 
@@ -242,7 +245,9 @@ class DesignAxisModel(SliceBaseTableModel):
         # clear the axis tag list attribute
         self.ordered_axis_tags = []
         for axis in fvar.axes:
+            # maintain order of axes in the font
             self.ordered_axis_tags.append(axis.axisTag)
+            # create a map of the min, default, max axis values
             self.fvar_axes[axis.axisTag] = [
                 axis.minValue,
                 axis.defaultValue,
@@ -250,6 +255,11 @@ class DesignAxisModel(SliceBaseTableModel):
             ]
             new_data.append(
                 [f"({axis.minValue}, {axis.maxValue}) [{axis.defaultValue}]", ""]
+            )
+            # use the axisID to locate the axis name in the name table
+            # if it does not exist, the getName method returns None
+            self.fvar_name_map[axis.axisTag] = (
+                ttfont["name"].getName(axis.axisNameID, 3, 1, 1033).toUnicode()
             )
 
         # set header with ordered axis tags
@@ -319,7 +329,10 @@ class DesignAxisModel(SliceBaseTableModel):
         elif needle in unregistered_axes:
             return unregistered_axes[needle]
         else:
-            return None
+            if needle in self.fvar_name_map:
+                return self.fvar_name_map[needle]
+            else:
+                return None
 
 
 class FontBitFlagModel(object):
