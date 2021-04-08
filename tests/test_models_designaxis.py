@@ -29,7 +29,7 @@ def test_designaxis_model_filled(qtbot, qtmodeltester):
     qtmodeltester.check(model)
 
     # confirm that font data loaded appropriately
-    assert model._h_header == ["(Min, Max) [Default]", "Instance Values"]
+    assert model._h_header == ["(Min, Max) [Default]", "Edit Values"]
     assert model.ordered_axis_tags == ["MONO", "CASL", "wght", "slnt", "CRSV"]
     assert model._v_header == ["MONO", "CASL", "wght", "slnt", "CRSV"]
     assert model.fvar_axes == {
@@ -146,7 +146,7 @@ def test_designaxis_model_get_default_axis_value(qtbot):
     assert model.get_default_axis_value("CRSV") == 0.5
 
 
-def test_designaxis_model_get_registered_axis_string(qtbot):
+def test_designaxis_model_get_axis_name_string(qtbot):
     tableview = QTableView()
     model = DesignAxisModel()
     tableview.setModel(model)
@@ -154,20 +154,20 @@ def test_designaxis_model_get_registered_axis_string(qtbot):
     model.load_font(get_font_model())
 
     # registered axes
-    assert model.get_registered_axis_string("ital") == "Italic"
-    assert model.get_registered_axis_string("opsz") == "Optical size"
-    assert model.get_registered_axis_string("slnt") == "Slant"
-    assert model.get_registered_axis_string("wdth") == "Width"
-    assert model.get_registered_axis_string("wght") == "Weight"
+    assert model.get_axis_name_string("ital") == "Italic"
+    assert model.get_axis_name_string("opsz") == "Optical size"
+    assert model.get_axis_name_string("slnt") == "Slant"
+    assert model.get_axis_name_string("wdth") == "Width"
+    assert model.get_axis_name_string("wght") == "Weight"
 
     # unregistered axes
-    assert model.get_registered_axis_string("CASL") == "Casual"
-    assert model.get_registered_axis_string("CRSV") == "Cursive"
-    assert model.get_registered_axis_string("XPRN") == "Expression"
-    assert model.get_registered_axis_string("GRAD") == "Grade"
-    assert model.get_registered_axis_string("MONO") == "Monospace"
-    assert model.get_registered_axis_string("SOFT") == "Softness"
-    assert model.get_registered_axis_string("WONK") == "Wonky"
+    assert model.get_axis_name_string("CASL") == "Casual"
+    assert model.get_axis_name_string("CRSV") == "Cursive"
+    assert model.get_axis_name_string("XPRN") == "Expression"
+    assert model.get_axis_name_string("GRAD") == "Grade"
+    assert model.get_axis_name_string("MONO") == "Monospace"
+    assert model.get_axis_name_string("SOFT") == "Softness"
+    assert model.get_axis_name_string("WONK") == "Wonky"
 
     # not a known (to this application) axis tag
-    assert model.get_registered_axis_string("ZXYJ") is None
+    assert model.get_axis_name_string("ZXYJ") is None

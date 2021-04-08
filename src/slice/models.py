@@ -213,7 +213,7 @@ class DesignAxisModel(SliceBaseTableModel):
         # add full registered axis strings in tooltips
         if role == Qt.ToolTipRole:
             if orientation == Qt.Vertical:
-                axis_name = self.get_registered_axis_string(self._v_header[section])
+                axis_name = self.get_axis_name_string(self._v_header[section])
                 # if this is a defined registered axis value, create a tooltip
                 # with the full axis name
                 if axis_name:
@@ -295,7 +295,7 @@ class DesignAxisModel(SliceBaseTableModel):
         else:
             return None
 
-    def get_registered_axis_string(self, needle):
+    def get_axis_name_string(self, needle):
         registered_axes = {
             "ital": "Italic",
             "opsz": "Optical size",
