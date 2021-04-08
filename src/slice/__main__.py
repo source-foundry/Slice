@@ -483,9 +483,7 @@ class MainWindow(QMainWindow):
         )
 
     def menu_clicked_documentation(self):
-        QDesktopServices.openUrl(
-            QUrl("https://github.com/source-foundry/Slice/blob/main/README.md")
-        )
+        QDesktopServices.openUrl(QUrl("https://slice-gui.netlify.app/docs/"))
 
     def menu_clicked_fvar(self):
         QDesktopServices.openUrl(
