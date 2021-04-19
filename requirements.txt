@@ -10,7 +10,7 @@ fonttools==4.22.0
     # via -r requirements.in
 pyinstaller-hooks-contrib==2021.1
     # via pyinstaller
-pyinstaller==4.2
+pyinstaller==4.3
     # via -r requirements.in
 pyqt5-qt==5.15.2
     # via pyqt5
