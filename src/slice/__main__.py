@@ -56,7 +56,7 @@ from .ui.dialogs import (
     SliceOpenFileDialog,
     SliceSaveFileDialog,
 )
-from .ui.widgets import DragDropLineEdit
+from .ui.widgets import CollapsibleBox, DragDropLineEdit
 
 __VERSION__ = "0.5.0"
 
@@ -221,7 +221,7 @@ class MainWindow(QMainWindow):
 
     def setUIMainWindow(self):
         self.setWindowTitle("Slice")
-        self.resize(850, 950)
+        self.resize(850, 450)
 
     def setUIMainLayout(self):
         self.main_layout = QVBoxLayout()
@@ -289,14 +289,12 @@ class MainWindow(QMainWindow):
     #
 
     def setUIAxisValueDataEntry(self):
-        outerVBox = QVBoxLayout()
+        self.axisVBox = QVBoxLayout()
         axisEditLabel = QLabel("<h4>Axis Definitions</h4>")
         axisEditLabel.setStyleSheet("QLabel { padding-left: 5px;}")
-        axisEditGroupBox = QGroupBox("")
-        axisEditGroupBox.setMinimumHeight(200)
-        axisEditGroupBox.setSizePolicy(
-            QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding
-        )
+        self.axisEditGroupBox = QGroupBox("")
+        self.axisEditGroupBox.setMinimumHeight(200)
+        self.axisEditGroupBox.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
 
         self.fvar_table_view = QTableView()
         self.fvar_table_model = DesignAxisModel()
@@ -304,9 +302,10 @@ class MainWindow(QMainWindow):
         self.fvar_table_view.horizontalHeader().setStretchLastSection(True)
         self.fvar_table_view.resizeColumnToContents(0)
         self.fvar_table_view.setAlternatingRowColors(True)
-        axisEditGroupBox.setLayout(QVBoxLayout())
-        axisEditGroupBox.layout().addWidget(self.fvar_table_view)
-        axisEditGroupBox.setMinimumHeight(205)
+        self.axisEditGroupBox.setLayout(QVBoxLayout())
+        self.axisEditGroupBox.layout().addWidget(self.fvar_table_view)
+        self.axisEditGroupBox.setMinimumHeight(205)
+        self.axisEditGroupBox.setMaximumHeight(350)
 
         ibmplex_id = QFontDatabase.addApplicationFont(":/font/IBMPlexMono-Regular.ttf")
         font_family = QFontDatabase.applicationFontFamilies(ibmplex_id)[0]
@@ -314,11 +313,11 @@ class MainWindow(QMainWindow):
         self.fvar_table_view.setFont(ibmplex)
         self.fvar_table_view.resizeColumnToContents(0)
 
-        outerVBox.addWidget(axisEditLabel)
-        outerVBox.addWidget(axisEditGroupBox)
+        self.axisVBox.addWidget(axisEditLabel)
+        self.axisVBox.addWidget(self.axisEditGroupBox)
         # add to main layout
         # self.main_layout.addSpacing(10)
-        self.main_layout.addLayout(outerVBox)
+        self.main_layout.addLayout(self.axisVBox)
 
     #
     # Name table record editor table view
@@ -348,7 +347,11 @@ class MainWindow(QMainWindow):
         outerVBox.addWidget(nameTableLabel)
         outerVBox.addWidget(nameTableGroupBox)
         # self.main_layout.addSpacing(10)
-        self.main_layout.addLayout(outerVBox)
+        # self.main_layout.addLayout(outerVBox)
+        collapsible_box = CollapsibleBox(parent=self, title="Developer Editors")
+        collapsible_box.setContentLayout(outerVBox)
+
+        self.main_layout.addWidget(collapsible_box)
 
     #
     # Bit flag settings editor table view
