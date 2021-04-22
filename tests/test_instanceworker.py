@@ -15,6 +15,12 @@ def bit_is_set(int_type, offset):
 
 
 def get_font_model():
+    # Values in this test font
+    # {'axisTag': 'MONO', 'axisNameID': 269, 'flags': 0, 'minValue': 0.0, 'defaultValue': 0.0, 'maxValue': 1.0}
+    # {'axisTag': 'CASL', 'axisNameID': 270, 'flags': 0, 'minValue': 0.0, 'defaultValue': 0.0, 'maxValue': 1.0}
+    # {'axisTag': 'wght', 'axisNameID': 271, 'flags': 0, 'minValue': 300.0, 'defaultValue': 300.0, 'maxValue': 1000.0}
+    # {'axisTag': 'slnt', 'axisNameID': 272, 'flags': 0, 'minValue': -15.0, 'defaultValue': 0.0, 'maxValue': 0.0}
+    # {'axisTag': 'CRSV', 'axisNameID': 273, 'flags': 0, 'minValue': 0.0, 'defaultValue': 0.5, 'maxValue': 1.0}
     return FontModel(Path("tests/assets/fonts/Recursive-VF.subset.ttf").resolve())
 
 
@@ -90,7 +96,11 @@ def test_instanceworker_class_default(tmpdir):
     assert iw.ttfont is None
 
 
-def test_instanceworker_instantiate_ttfont_and_gen_static_instance(tmpdir):
+def test_instanceworker_instantiate_ttfont_and_gen_with_no_user_axis_defs(tmpdir):
+    # This should gen to the var font with the same axis ranges
+    # Note that this route is not executed because the application validates
+    # that at least one axis is defined, else there is nothing to do
+    # since the request is the original var font if there are no axis value defs
     outpath = str(tmpdir.join("test.ttf"))
     font_model = get_font_model()
 
@@ -121,20 +131,32 @@ def test_instanceworker_instantiate_ttfont_and_gen_static_instance(tmpdir):
     # it is a variable font and should have an fvar table
     assert "fvar" in iw.ttfont
 
-    # after instantiation of the static, fvar should be gone
+    # confirm that all variable axes remain
     iw.instantiate_variable_font()
-    assert "fvar" not in iw.ttfont
+    assert "fvar" in iw.ttfont
+    # make list of axis tags
+    axis_tags = [axis.axisTag for axis in iw.ttfont["fvar"].axes]
+    # the font should include all variable axis tags in the original
+    assert "MONO" in axis_tags
+    assert "CASL" in axis_tags
+    assert "wght" in axis_tags
+    assert "slnt" in axis_tags
+    assert "CRSV" in axis_tags
 
 
 def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_one_axis(tmpdir):
+    # When there are
     outpath = str(tmpdir.join("test.ttf"))
     font_model = get_font_model()
 
     axis_model = DesignAxisModel()
     axis_model.load_font(font_model)
-    # the next step sets the user entered text to a value of "var"
-    # on the "MONO" axis row
-    axis_model._data[0][1] = "var"
+    # "MONO" axis defined as variable (i.e., no user input)
+    axis_model._data[0][1] = ""
+    axis_model._data[1][1] = "0"
+    axis_model._data[2][1] = "300"
+    axis_model._data[3][1] = "0"
+    axis_model._data[4][1] = "0.5"
 
     name_model = FontNameModel()
     name_model.load_font(font_model)
@@ -163,7 +185,15 @@ def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_one_axis(tmp
     assert "fvar" in iw.ttfont
     # in the test font, the "MONO" axis should still be variable
     # with the variable setting that was used above
-    assert [a.axisTag for a in iw.ttfont["fvar"].axes] == ["MONO"]
+    # make list of axis tags
+    axis_tags = [axis.axisTag for axis in iw.ttfont["fvar"].axes]
+    # the font should include a variable MONO axis, all others
+    # should have been sliced
+    assert "MONO" in axis_tags
+    assert "CASL" not in axis_tags
+    assert "wght" not in axis_tags
+    assert "slnt" not in axis_tags
+    assert "CRSV" not in axis_tags
 
 
 def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_multi_axis(tmpdir):
@@ -172,10 +202,14 @@ def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_multi_axis(t
 
     axis_model = DesignAxisModel()
     axis_model.load_font(font_model)
-    # the next step sets the user entered text to a value of "var"
-    # and "variable" on the "MONO" and "wght" axis rows, respectively
-    axis_model._data[0][1] = "var"
-    axis_model._data[2][1] = "variable"
+    # the next step mocks lack of user entry in MONO and CASL axis fields
+    # with values defined for other fields. This should lead to a sub-space
+    # build with variable and wght var axes
+    axis_model._data[0][1] = ""
+    axis_model._data[1][1] = ""
+    axis_model._data[2][1] = "300"
+    axis_model._data[3][1] = "0"
+    axis_model._data[4][1] = "0.5"
 
     name_model = FontNameModel()
     name_model.load_font(font_model)
@@ -199,12 +233,17 @@ def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_multi_axis(t
     # it is a variable font and should have an fvar table
     assert "fvar" in iw.ttfont
 
-    # after instantiation of the partial, fvar should still be present
+    # after sub-space gen, fvar should still be present
     iw.instantiate_variable_font()
     assert "fvar" in iw.ttfont
-    # in the test font, the "MONO" axis should still be variable
-    # with the variable setting that was used above
-    assert [a.axisTag for a in iw.ttfont["fvar"].axes] == ["MONO", "wght"]
+    axis_tags = [axis.axisTag for axis in iw.ttfont["fvar"].axes]
+    # the font should include a variable MONO and CASL axes, all others
+    # should have been sliced
+    assert "MONO" in axis_tags
+    assert "CASL" in axis_tags
+    assert "wght" not in axis_tags
+    assert "slnt" not in axis_tags
+    assert "CRSV" not in axis_tags
 
 
 def test_instanceworker_instantiate_ttfont_raises_valueerror_on_invalid_data(tmpdir):

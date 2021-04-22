@@ -48,22 +48,18 @@ def test_designaxis_model_filled(qtbot, qtmodeltester):
     ]
 
 
-def test_designaxis_model_get_static_instance_data(qtbot):
+def test_designaxis_model_get_instance_data(qtbot):
     tableview = QTableView()
     model = DesignAxisModel()
     tableview.setModel(model)
     qtbot.addWidget(tableview)
     model.load_font(get_font_model())
 
-    # without user entered definitions, we should get default
-    # axis values
-    assert model.get_instance_data() == {
-        "MONO": 0.0,
-        "CASL": 0.0,
-        "wght": 300.0,
-        "slnt": 0.0,
-        "CRSV": 0.5,
-    }
+    # without user entered definitions, we should get
+    # an empty axis tag / value dict
+    # this is intentional so that these axes remain
+    # variable
+    assert model.get_instance_data() == {}
 
     # simulate update of model data with user input
     # and check again to confirm that it is present
@@ -90,28 +86,22 @@ def test_designaxis_model_get_partial_instance_data(qtbot):
     qtbot.addWidget(tableview)
     model.load_font(get_font_model())
 
-    # without user entered definitions, we should get default
-    # axis values
-    assert model.get_instance_data() == {
-        "MONO": 0.0,
-        "CASL": 0.0,
-        "wght": 300.0,
-        "slnt": 0.0,
-        "CRSV": 0.5,
-    }
+    # without user entered definitions, we should get
+    # empty set
+    assert model.get_instance_data() == {}
 
     # simulate update of model data with user input
-    # that requests partial instance that maintains
+    # that requests sub-space that maintains
     # variable "MONO" and "slnt" axes
-    # (i.e. includes "var" and "Variable" definitions)
-    model._data[0][1] = "var"
+    # (i.e. these fields are empty)
+    model._data[0][1] = ""
     model._data[1][1] = "1.0"
     model._data[2][1] = "1000.0"
-    model._data[3][1] = "Variable"
+    model._data[3][1] = ""
     model._data[4][1] = "1.0"
     model.layoutChanged.emit()
 
-    # should not include axis tags: "MONO", "slnt"
+    # should not include instance values for: "MONO", "slnt"
     # the instantiation function maintains variable
     # axes for any axis tag that is present in font
     # and not included in this dict

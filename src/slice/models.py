@@ -279,12 +279,7 @@ class DesignAxisModel(SliceBaseTableModel):
             axis_value = self._data[x][1]
             if axis_value == "":
                 # if user did not define the axis value, then
-                # use the default axis value
-                instance_data[axistag] = float(self.get_default_axis_value(axistag))
-            elif axis_value.lower() in ("var", "variable"):
-                # skip the axis if the user requests that it remains
-                # a variable design axis with any casing of "var"
-                # or "variable" text string entry
+                # it remains a variable axis
                 pass
             else:
                 # else use the numeric value set in the editor
@@ -297,6 +292,13 @@ class DesignAxisModel(SliceBaseTableModel):
                     )
 
         return instance_data
+
+    def instance_data_validates(self):
+        # validator that returns True if there is at least one
+        # axis tag with a defined instance, and False if all
+        # axis tags have blank entry fields = the original variable
+        # font that the user entered
+        return len(self.get_instance_data()) != 0
 
     def get_default_axis_value(self, axistag):
         if axistag in self.fvar_axes:
