@@ -114,7 +114,8 @@ run: build-image-resource build-font-resource
 # Source formatting
 # ---------------------
 format:
-	isort src && black src
+	isort src
+	black --exclude=".*fontresources\.py|.*imageresources\.py" src
 
 
 .PHONY: build-image-resource build-font-resource\
