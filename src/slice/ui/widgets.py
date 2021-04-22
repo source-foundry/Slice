@@ -102,18 +102,6 @@ class CollapsibleBox(QWidget):
         toggleAnimation.addAnimation(
             QPropertyAnimation(self.contentArea, b"maximumHeight")
         )
-        # toggle the axisEditGroup box height
-
-        toggleAnimation.addAnimation(
-            QPropertyAnimation(parent.axisEditGroupBox, b"minimumHeight")
-        )
-        toggleAnimation.addAnimation(
-            QPropertyAnimation(parent.axisVBox, b"minimumHeight")
-        )
-
-        # toggleAnimation.addAnimation(
-        #     QPropertyAnimation(parent.axisEditGroupBox, b"minimumHeight")
-        # )
 
         mainLayout = self.mainLayout
         mainLayout.setVerticalSpacing(0)
@@ -137,16 +125,15 @@ class CollapsibleBox(QWidget):
         self.toggleButton.clicked.connect(start_animation)
 
     def setContentLayout(self, contentLayout):
-        # Not sure if this is equivalent to self.contentArea.destroy()
         self.contentArea.destroy()
         self.contentArea.setLayout(contentLayout)
         collapsedHeight = self.sizeHint().height() - self.contentArea.maximumHeight()
         contentHeight = contentLayout.sizeHint().height()
         for i in range(self.toggleAnimation.animationCount() - 1):
-            spoilerAnimation = self.toggleAnimation.animationAt(i)
-            spoilerAnimation.setDuration(self.animationDuration)
-            spoilerAnimation.setStartValue(collapsedHeight)
-            spoilerAnimation.setEndValue(collapsedHeight + contentHeight)
+            revealAnimation = self.toggleAnimation.animationAt(i)
+            revealAnimation.setDuration(self.animationDuration)
+            revealAnimation.setStartValue(collapsedHeight)
+            revealAnimation.setEndValue(collapsedHeight + contentHeight)
         contentAnimation = self.toggleAnimation.animationAt(
             self.toggleAnimation.animationCount() - 1
         )

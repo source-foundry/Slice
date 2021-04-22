@@ -17,7 +17,7 @@ import sys
 import traceback
 from pathlib import Path
 
-from PyQt5.QtCore import Qt, QThreadPool, QUrl
+from PyQt5.QtCore import QPoint, Qt, QThreadPool, QUrl
 from PyQt5.QtGui import (
     QDesktopServices,
     QFont,
@@ -81,12 +81,17 @@ class MainWindow(QMainWindow):
         self.setUIMainWindow()
         self.setUIMainLayout()
         self.setUIAppIconTitle()
+        self.addStretch()
         self.setUIFontPathDataEntry()
+        self.addStretch()
         self.setUIAxisValueDataEntry()
+        self.addStretch()
         self.setUINameTableDataEntry()
+        self.addStretch()
         self.setUIBitSettingsDataEntry()
+        self.addStretch()
         self.setUISliceButton()
-        # self.addStretch()
+        self.addStretch()
         self.setUIStatusBar()
 
         # Define main layout on central widget
@@ -293,7 +298,6 @@ class MainWindow(QMainWindow):
         axisEditLabel = QLabel("<h4>Axis Definitions</h4>")
         axisEditLabel.setStyleSheet("QLabel { padding-left: 5px;}")
         self.axisEditGroupBox = QGroupBox("")
-        self.axisEditGroupBox.setMinimumHeight(200)
         self.axisEditGroupBox.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
 
         self.fvar_table_view = QTableView()
@@ -305,7 +309,7 @@ class MainWindow(QMainWindow):
         self.axisEditGroupBox.setLayout(QVBoxLayout())
         self.axisEditGroupBox.layout().addWidget(self.fvar_table_view)
         self.axisEditGroupBox.setMinimumHeight(205)
-        self.axisEditGroupBox.setMaximumHeight(350)
+        self.axisEditGroupBox.setMaximumHeight(205)
 
         ibmplex_id = QFontDatabase.addApplicationFont(":/font/IBMPlexMono-Regular.ttf")
         font_family = QFontDatabase.applicationFontFamilies(ibmplex_id)[0]
@@ -327,31 +331,29 @@ class MainWindow(QMainWindow):
         outerVBox = QVBoxLayout()
         nameTableLabel = QLabel("<h4>Name Table Definitions</h4>")
         nameTableLabel.setStyleSheet("QLabel { padding-left: 5px;}")
-        nameTableGroupBox = QGroupBox("")
+        self.nameTableGroupBox = QGroupBox("")
 
         self.nameTableView = QTableView()
         self.name_table_model = FontNameModel()
         self.nameTableView.setModel(self.name_table_model)
         self.nameTableView.horizontalHeader().setStretchLastSection(True)
         self.nameTableView.setAlternatingRowColors(True)
+        # self.nameTableView.setMinimumHeight(150)
 
         ibmplex_id = QFontDatabase.addApplicationFont(":/font/IBMPlexMono-Regular.ttf")
         font_family = QFontDatabase.applicationFontFamilies(ibmplex_id)[0]
         ibmplex = QFont(font_family)
         self.nameTableView.setFont(ibmplex)
 
-        nameTableGroupBox.setLayout(QVBoxLayout())
-        nameTableGroupBox.layout().addWidget(self.nameTableView)
-        nameTableGroupBox.setMinimumHeight(210)
+        self.nameTableGroupBox.setLayout(QVBoxLayout())
+        self.nameTableGroupBox.layout().addWidget(self.nameTableView)
+        self.nameTableGroupBox.setMinimumHeight(175)
+        # self.nameTableGroupBox.setMaximumHeight(600)
 
         outerVBox.addWidget(nameTableLabel)
-        outerVBox.addWidget(nameTableGroupBox)
+        outerVBox.addWidget(self.nameTableGroupBox)
         # self.main_layout.addSpacing(10)
-        # self.main_layout.addLayout(outerVBox)
-        collapsible_box = CollapsibleBox(parent=self, title="Developer Editors")
-        collapsible_box.setContentLayout(outerVBox)
-
-        self.main_layout.addWidget(collapsible_box)
+        self.main_layout.addLayout(outerVBox)
 
     #
     # Bit flag settings editor table view
@@ -404,7 +406,12 @@ class MainWindow(QMainWindow):
         outerVBox.addWidget(bitSettingsOuterGroupBox)
 
         # self.main_layout.addSpacing(10)
-        self.main_layout.addLayout(outerVBox)
+        # self.main_layout.addLayout(outerVBox)
+
+        collapsible_box = CollapsibleBox(parent=self, title="Developer Editors")
+        collapsible_box.setContentLayout(outerVBox)
+
+        self.main_layout.addWidget(collapsible_box)
 
     #
     # Slice execution button
@@ -446,7 +453,8 @@ class MainWindow(QMainWindow):
     def setWindowCenterPosition(self):
         rect = self.frameGeometry()
         centerLoc = QDesktopWidget().availableGeometry().center()
-        rect.moveCenter(centerLoc)
+        adjCenterLoc = QPoint(centerLoc.x(), centerLoc.y() - 200)
+        rect.moveCenter(adjCenterLoc)
         self.move(rect.topLeft())
 
     #
