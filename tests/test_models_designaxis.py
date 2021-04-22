@@ -112,6 +112,33 @@ def test_designaxis_model_get_partial_instance_data(qtbot):
     }
 
 
+def test_designaxis_model_instance_data_validates(qtbot):
+    tableview = QTableView()
+    model = DesignAxisModel()
+    tableview.setModel(model)
+    qtbot.addWidget(tableview)
+    model.load_font(get_font_model())
+
+    # without user entered definitions, we should get
+    # an empty axis tag / value dict
+    # this is intentional so that these axes remain
+    # variable
+    assert model.get_instance_data() == {}
+
+    assert model.instance_data_validates() is False
+
+    # fill model and try again
+    # this requires at least one axis to have a value
+    model._data[0][1] = ""
+    model._data[1][1] = "1.0"
+    model._data[2][1] = ""
+    model._data[3][1] = ""
+    model._data[4][1] = ""
+    model.layoutChanged.emit()
+
+    assert model.instance_data_validates() is True
+
+
 def test_designaxis_model_get_number_of_axes(qtbot):
     tableview = QTableView()
     model = DesignAxisModel()
