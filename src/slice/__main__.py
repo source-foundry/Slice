@@ -54,6 +54,7 @@ from .ui.dialogs import (
     SliceAboutDialog,
     SliceErrorDialog,
     SliceOpenFileDialog,
+    SliceProgressDialog,
     SliceSaveFileDialog,
 )
 from .ui.widgets import DragDropLineEdit
@@ -531,9 +532,7 @@ class MainWindow(QMainWindow):
         QDesktopServices.openUrl(QUrl("https://github.com/source-foundry/Slice"))
 
     def menu_clicked_updatecheck(self):
-        QDesktopServices.openUrl(
-            QUrl("https://github.com/source-foundry/Slice/releases")
-        )
+        QDesktopServices.openUrl(QUrl("https://github.com/source-foundry/Slice/releases"))
 
     #
     # Button click events
@@ -584,12 +583,18 @@ class MainWindow(QMainWindow):
                     self.collect_head_bit_checkbox_fields(),
                 )
                 try:
+                    # set up instance worker
                     instance_worker = InstanceWorker(
                         outpath,
                         self.font_model,
                         self.fvar_table_model,
                         self.name_table_model,
                         bit_model,
+                    )
+
+                    # launch progress bar dialog
+                    self.progress_dialog = SliceProgressDialog(
+                        instance_worker.signals.finished
                     )
 
                     # attach InstanceWorker signals / slots
@@ -603,8 +608,9 @@ class MainWindow(QMainWindow):
                     self.threadpool.start(instance_worker)
                     self.statusbar.showMessage("Slicing...")
                     self.sliceButton.setDisabled(True)
-
                 except Exception as e:
+                    # hide progress dialog if exception occurred
+                    self.progress_dialog.hide()
                     SliceErrorDialog(
                         "Font processing failed with an error.  See details below.",
                         detailed_text=str(e),
@@ -654,6 +660,8 @@ class MainWindow(QMainWindow):
         self.statusbar.showMessage("Complete")
 
     def _instance_worker_error(self, error_string):
+        # hide progress dialog before presentation of error dialog
+        self.progress_dialog.hide()
         # Instance worker errored
         # Propagate the exception to an error dialog
         SliceErrorDialog(
@@ -692,9 +700,7 @@ class MainWindow(QMainWindow):
         axis_value_table_was_set = self.fvar_table_model.load_font(self.font_model)
 
         self.fvar_table_view.resizeColumnToContents(0)
-        self.fvar_table_view.verticalHeader().resizeSections(
-            QHeaderView.ResizeToContents
-        )
+        self.fvar_table_view.verticalHeader().resizeSections(QHeaderView.ResizeToContents)
 
         # uncheck all bit flag setting check boxes
         self.os2_fsselection_bit_0_checkbox.setChecked(False)
