@@ -221,7 +221,7 @@ class MainWindow(QMainWindow):
 
     def setUIMainWindow(self):
         self.setWindowTitle("Slice")
-        self.resize(850, 950)
+        # self.resize(850, 950)
 
     def setUIMainLayout(self):
         self.main_layout = QVBoxLayout()
@@ -307,6 +307,7 @@ class MainWindow(QMainWindow):
         axisEditGroupBox.setLayout(QVBoxLayout())
         axisEditGroupBox.layout().addWidget(self.fvar_table_view)
         axisEditGroupBox.setMinimumHeight(205)
+        axisEditGroupBox.setMaximumHeight(350)
 
         ibmplex_id = QFontDatabase.addApplicationFont(":/font/IBMPlexMono-Regular.ttf")
         font_family = QFontDatabase.applicationFontFamilies(ibmplex_id)[0]
@@ -441,9 +442,10 @@ class MainWindow(QMainWindow):
         self.main_layout.addStretch()
 
     def setWindowCenterPosition(self):
+        self.setGeometry(0, 0, 850, 900)
         rect = self.frameGeometry()
-        centerLoc = QDesktopWidget().availableGeometry().center()
-        rect.moveCenter(centerLoc)
+        centerCoord = QDesktopWidget().availableGeometry().center()
+        rect.moveCenter(centerCoord)
         self.move(rect.topLeft())
 
     #
