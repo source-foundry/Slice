@@ -12,18 +12,20 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with Slice.  If not, see <https://www.gnu.org/licenses/>.
-
 from fontTools import __version__ as fonttools_version
 from PyQt5.QtCore import QDir, Qt
 from PyQt5.QtGui import QFont, QFontDatabase, QIcon, QImage, QPixmap
 from PyQt5.QtWidgets import (
+    QDesktopWidget,
     QDialog,
     QDialogButtonBox,
     QFileDialog,
     QLabel,
     QMessageBox,
+    QProgressBar,
     QTextBrowser,
     QVBoxLayout,
+    QWidget,
 )
 
 from ..imageresources import *
@@ -151,6 +153,35 @@ class SliceAboutDialog(QDialog):
 
         self.setLayout(layout)
         self.exec_()
+
+
+class SliceProgressDialog(QWidget):
+    def __init__(self, close_signal):
+        QWidget.__init__(self)
+
+        layout = QVBoxLayout()
+
+        self.setGeometry(0, 0, 200, 75)
+        rect = self.frameGeometry()
+        centerCoord = QDesktopWidget().availableGeometry().center()
+        rect.moveCenter(centerCoord)
+        self.move(rect.topLeft())
+
+        self.message = QLabel("Slicing...")
+        self.progress_bar = QProgressBar(self)
+        self.progress_bar.setRange(0, 0)
+
+        layout.addWidget(self.message)
+        layout.addWidget(self.progress_bar)
+
+        self.setLayout(layout)
+        close_signal.connect(self.close_progress_dialog)
+        self.show()
+
+    def close_progress_dialog(self):
+        self.message.setText("Complete")
+        self.progress_bar.setRange(0, 1)
+        self.hide()
 
 
 class SliceErrorDialog(QMessageBox):
