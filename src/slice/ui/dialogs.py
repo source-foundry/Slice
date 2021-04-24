@@ -89,6 +89,12 @@ class SliceAboutDialog(QDialog):
     def __init__(self, version):
         QDialog.__init__(self)
 
+        self.setGeometry(0, 0, 375, 425)
+        rect = self.frameGeometry()
+        centerCoord = QDesktopWidget().availableGeometry().center()
+        rect.moveCenter(centerCoord)
+        self.move(rect.topLeft())
+
         self.setWindowTitle("About Slice")
         self.setWindowIcon(QIcon(":/img/slice-icon.svg"))
 
@@ -137,13 +143,14 @@ class SliceAboutDialog(QDialog):
 
         attributionTextField.setHtml(
             f"<ul>"
-            f"<li><p><small><a href='https://www.riverbankcomputing.com/software/pyqt/'>PyQt5</a> GUI framework</small></p></li>"
-            f"<li><p><small><a href='https://github.com/fonttools/fonttools'>fontTools</a> library (v{fonttools_version})</small></p></li>"
-            f"<li><p><small><a href='https://www.recursive.design'>Recursive Sans typeface</a> by Stephen Nixon</small></p></li>"
-            f"<li><p><small><a href='https://github.com/IBM/plex'>IBM Plex Mono typeface</a> by IBM</small></p></li>"
+            f"<li><p><a href='https://www.riverbankcomputing.com/software/pyqt/'>PyQt5</a> GUI framework</p></li>"
+            f"<li><p><a href='https://github.com/fonttools/fonttools'>fontTools</a> library (v{fonttools_version})</p></li>"
+            f"<li><p><a href='https://www.recursive.design'>Recursive Sans typeface</a> by Stephen Nixon</p></li>"
+            f"<li><p><a href='https://github.com/IBM/plex'>IBM Plex Mono typeface</a> by IBM</p></li>"
             f"</ul>"
         )
-        attributionTextField.setMaximumHeight(100)
+        attributionTextField.setMaximumHeight(200)
+        attributionTextField.setMinimumWidth(350)
         layout.addWidget(attributionTextField)
 
         for i in range(0, layout.count()):
