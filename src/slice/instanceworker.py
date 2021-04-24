@@ -73,7 +73,8 @@ class InstanceWorker(QRunnable):
         else:
             # returns the file out file path on success
             self.signals.result.emit(self.outpath)
-            self.signals.finished.emit()
+
+        self.signals.finished.emit()
 
     def instantiate_ttfont(self):
         self.ttfont = TTFont(self.font_model.fontpath)
