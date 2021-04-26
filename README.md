@@ -23,7 +23,7 @@ Please file issues on the [project tracker](https://github.com/source-foundry/Sl
 
 Source contributions are welcome.  Please see the [Slice application developer documentation](https://slice-gui.netlify.app/docs/developer/#slice-source-code-contributions) for instructions on how to set up a local development environment and test your source changes.  Submit a pull request with any changes that you would like to share upstream.
 
-The Slice documentation is maintained in a separate GitHub repository.  Please see the [Slice documentation developer documentation](https://slice-gui.netlify.app/docs/developer/#slice-documentation-contributions) for additional details about how to modify documentation content and set up a local testing environment.
+The Slice documentation is maintained in a separate GitHub repository.  Please see the [Slice documentation developer docs](https://slice-gui.netlify.app/docs/developer/#slice-documentation-contributions) for additional details about how to modify documentation content and set up a local testing environment.
 
 Contributions to this project are accepted under the licenses specified in the [Licenses](#Licenses) section below.
 
