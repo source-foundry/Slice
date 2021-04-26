@@ -37,6 +37,8 @@ Please see the [thirdparty directory](https://github.com/source-foundry/Slice/tr
 
 ❤️ Slice slices with the fantastic [fonttools Python library](https://github.com/fonttools/fonttools).
 
+❤️ Slice uses the wonderful [Recursive](https://github.com/arrowtype/recursive) (sliced with Slice!) and [IBM Plex](https://github.com/IBM/plex) typefaces in the UI.
+
 ⚡ Slice docs are powered by Netlify.
 
   <a href="https://www.netlify.com">
