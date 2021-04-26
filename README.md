@@ -2,6 +2,8 @@
 
 ### An open-source application to create custom static fonts from variable fonts
 
+<img src="https://d33wubrfki0l68.cloudfront.net/d67ed997178c60733041aaaf932bdf9c3afcb63b/fda62/images/slice-hero-crunch.png">
+
 ## About
 
 Slice is a GUI application that takes a variable font and compiles a new custom "slice" of the variable design space with user-defined design axis values.  This output file is commonly known as a "static instance" font in type software developer parlance.  The application supports custom font family naming so that you can view output files as different families in application menus.
