@@ -39,7 +39,7 @@ Please see the [thirdparty directory](https://github.com/source-foundry/Slice/tr
 
 ❤️ Slice uses the wonderful [Recursive](https://github.com/arrowtype/recursive) (sliced with Slice!) and [IBM Plex](https://github.com/IBM/plex) typefaces in the UI.
 
-⚡ Slice docs are powered by Netlify.
+⚡ [Slice docs](https://slice-gui.netlify.app/) are powered by Netlify ([doc sources](https://github.com/source-foundry/Slice-docs)).
 
   <a href="https://www.netlify.com">
     <img src="https://www.netlify.com/img/global/badges/netlify-light.svg" alt="Deploys by Netlify" />
