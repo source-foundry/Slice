@@ -291,7 +291,7 @@ class MainWindow(QMainWindow):
 
     def setUIAxisValueDataEntry(self):
         outerVBox = QVBoxLayout()
-        axisEditLabel = QLabel("<h4>Axis Definitions</h4>")
+        axisEditLabel = QLabel("<h4>Axis Editor</h4>")
         axisEditLabel.setStyleSheet("QLabel { padding-left: 5px;}")
         axisEditGroupBox = QGroupBox("")
         axisEditGroupBox.setMinimumHeight(200)
@@ -328,7 +328,7 @@ class MainWindow(QMainWindow):
 
     def setUINameTableDataEntry(self):
         outerVBox = QVBoxLayout()
-        nameTableLabel = QLabel("<h4>Name Table Definitions</h4>")
+        nameTableLabel = QLabel("<h4>Name Editor</h4>")
         nameTableLabel.setStyleSheet("QLabel { padding-left: 5px;}")
         nameTableGroupBox = QGroupBox("")
 
@@ -359,7 +359,7 @@ class MainWindow(QMainWindow):
     def setUIBitSettingsDataEntry(self):
         outerVBox = QVBoxLayout()
         outerHBox = QHBoxLayout()
-        bitSettingsLabel = QLabel("<h4>Bit Flag Settings</h4>")
+        bitSettingsLabel = QLabel("<h4>Bit Flag Editor</h4>")
         bitSettingsLabel.setStyleSheet("QLabel { padding-left: 5px;}")
 
         bitSettingsOuterGroupBox = QGroupBox("")
