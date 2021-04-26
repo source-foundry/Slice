@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.5.0
+
+- New: add support for slicing to files that have a subset of variable axes (commonly known as partial instantiation or sub-spacing)
+- New: add new validation that at least one axis value is defined (else user is requesting the input font design space with the new definition approach)
+- New: add indefinite progress indicator during slicing operation
+- New: add axis editor tag tooltips with full axis names that are derived from (1) OpenType registered axes; (2) Google Fonts axis registry; (3) font's fvar table definitions
+- New: add embedded Recursive typeface instance subset for formatting of the in-app view of application name (SIL OFL)
+- New: add embedded IBM Plex typeface for formatting of the axis and name table editor text (SIL OFL)
+- New: add Code of Conduct
+- Fixed: address (some) of the VirusTotal false positive flags for the Win executable build (required PyInstaller update)
+- Fixed: axis editor table view max height
+- Updated: Changed "Axis Definitions" view title to "Axis Editor"
+- Updated: Changed "Name Table Definitions" view title to "Name Editor"
+- Updated: Changed "Bit Flag Settings" view title to "Bit Flag Editor"
+- Updated: improve application launch center position
+- Updated: About dialog window width increased
+- Updated: About dialog dependencies list text size increased
+- Updated: change axis and name table editor field header strings to "Edit Values" from "Instance Values"
+- Updated: change Makefile `run` target with build of automated fontresources and imageresources on each execution
+- Updated: pin the PyInstaller build dependency at production release v4.3
+- Updated: bump fonttools dependency to v4.22.0 from v4.21.1
+- Removed: embedded Monoton typeface
+
 ## v0.4.0
 
 - add macOS code signed / installer notarization support
@@ -21,7 +44,6 @@
 - fix: set the window icon to the Slice icon on Windows views
 - fix: set the About dialog title and icon on Windows views
 - fix: update image conversion approach to maintain alpha transparency in Windows application icon
-
 
 ## v0.2.1
 
