@@ -3,6 +3,7 @@
 ## v0.5.1
 
 - Fix: Application crash when a user attempts to enter invalid axis value data
+- Updated: bump fonttools dependency to v4.22.1 from v4.22.0
 
 ## v0.5.0
 
