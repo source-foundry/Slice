@@ -6,7 +6,7 @@
 #
 altgraph==0.17
     # via pyinstaller
-fonttools==4.22.0
+fonttools==4.22.1
     # via -r requirements.in
 pyinstaller-hooks-contrib==2021.1
     # via pyinstaller
