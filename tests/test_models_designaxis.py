@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from PyQt5.QtWidgets import QTableView
 
 from slice.models import DesignAxisModel, FontModel
@@ -137,6 +139,35 @@ def test_designaxis_model_instance_data_validates_missing_data(qtbot):
     model.layoutChanged.emit()
 
     assert model.instance_data_validates_missing_data() is True
+
+
+def test_designaxis_model_instance_data_validates_invalid_data(qtbot):
+    tableview = QTableView()
+    model = DesignAxisModel()
+    tableview.setModel(model)
+    qtbot.addWidget(tableview)
+    model.load_font(get_font_model())
+
+    # without user entered definitions, we should get
+    # an empty axis tag / value dict
+    # this is intentional so that these axes remain
+    # variable
+    assert model.get_instance_data() == {}
+
+    assert model.instance_data_validates_missing_data() is False
+
+    # fill model and try again
+    # but this time add invalid data
+    # this should prompt a ValueError exception
+    model._data[0][1] = ""
+    model._data[1][1] = "BOGUSVALUE"
+    model._data[2][1] = ""
+    model._data[3][1] = ""
+    model._data[4][1] = ""
+    model.layoutChanged.emit()
+
+    with pytest.raises(ValueError):
+        model.instance_data_validates_missing_data()
 
 
 def test_designaxis_model_get_number_of_axes(qtbot):
