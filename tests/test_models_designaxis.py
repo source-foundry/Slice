@@ -112,7 +112,7 @@ def test_designaxis_model_get_partial_instance_data(qtbot):
     }
 
 
-def test_designaxis_model_instance_data_validates(qtbot):
+def test_designaxis_model_instance_data_validates_missing_data(qtbot):
     tableview = QTableView()
     model = DesignAxisModel()
     tableview.setModel(model)
@@ -125,7 +125,7 @@ def test_designaxis_model_instance_data_validates(qtbot):
     # variable
     assert model.get_instance_data() == {}
 
-    assert model.instance_data_validates() is False
+    assert model.instance_data_validates_missing_data() is False
 
     # fill model and try again
     # this requires at least one axis to have a value
@@ -136,7 +136,7 @@ def test_designaxis_model_instance_data_validates(qtbot):
     model._data[4][1] = ""
     model.layoutChanged.emit()
 
-    assert model.instance_data_validates() is True
+    assert model.instance_data_validates_missing_data() is True
 
 
 def test_designaxis_model_get_number_of_axes(qtbot):

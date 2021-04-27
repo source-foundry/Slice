@@ -551,7 +551,7 @@ class MainWindow(QMainWindow):
             self.statusbar.update()
             # must keep this return statement to abort execution!
             return
-        elif not self.fvar_table_model.instance_data_validates():
+        elif not self.fvar_table_model.instance_data_validates_missing_data():
             SliceErrorDialog(
                 "You requested the same design space that is supported in the "
                 "font path that you are processing. Please define at least one "

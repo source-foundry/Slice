@@ -293,7 +293,7 @@ class DesignAxisModel(SliceBaseTableModel):
 
         return instance_data
 
-    def instance_data_validates(self):
+    def instance_data_validates_missing_data(self):
         # validator that returns True if there is at least one
         # axis tag with a defined instance, and False if all
         # axis tags have blank entry fields = the original variable
