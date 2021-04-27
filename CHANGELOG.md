@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.1
+
+- Fix: Application crash when a user attempts to enter invalid axis value data
+
 ## v0.5.0
 
 - New: add support for slicing to files that have a subset of variable axes (commonly known as partial instantiation or sub-spacing)
