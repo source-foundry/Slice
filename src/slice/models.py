@@ -288,7 +288,7 @@ class DesignAxisModel(SliceBaseTableModel):
                 except ValueError:
                     raise ValueError(
                         f"'{axis_value}' is not a valid {axistag} axis value. "
-                        f"Please enter a valid value and try again."
+                        f"Please enter a single numeric value and try again."
                     )
 
         return instance_data
@@ -298,7 +298,10 @@ class DesignAxisModel(SliceBaseTableModel):
         # axis tag with a defined instance, and False if all
         # axis tags have blank entry fields = the original variable
         # font that the user entered
-        return len(self.get_instance_data()) != 0
+        try:
+            return len(self.get_instance_data()) != 0
+        except ValueError as e:
+            raise e
 
     def get_default_axis_value(self, axistag):
         if axistag in self.fvar_axes:

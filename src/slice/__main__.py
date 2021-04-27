@@ -551,7 +551,21 @@ class MainWindow(QMainWindow):
             self.statusbar.update()
             # must keep this return statement to abort execution!
             return
-        elif not self.fvar_table_model.instance_data_validates_missing_data():
+
+        # validate axis editor instance values
+        # returns True/False response for test of
+        # at least one instance value
+        # raises ValueError on attempt to cast to float
+        # if the entry is a non-numeric value
+        try:
+            instance_values_are_present = (
+                self.fvar_table_model.instance_data_validates_missing_data()
+            )
+        except ValueError as e:
+            SliceErrorDialog(f"{e}")
+            return
+
+        if not instance_values_are_present:
             SliceErrorDialog(
                 "You requested the same design space that is supported in the "
                 "font path that you are processing. Please define at least one "
