@@ -11,6 +11,14 @@ def get_font_model():
     return FontModel(Path("tests/assets/fonts/Recursive-VF.subset.ttf").resolve())
 
 
+def get_font_model_woff():
+    return FontModel(Path("tests/assets/fonts/Recursive-VF.subset.woff").resolve())
+
+
+def get_font_model_woff2():
+    return FontModel(Path("tests/assets/fonts/Recursive-VF.subset.woff2").resolve())
+
+
 def test_designaxis_model_default(qtbot, qtmodeltester):
     tableview = QTableView()
     model = DesignAxisModel()
@@ -26,6 +34,66 @@ def test_designaxis_model_filled(qtbot, qtmodeltester):
     tableview.setModel(model)
     qtbot.addWidget(tableview)
     model.load_font(get_font_model())
+
+    # test with qtmodeltester
+    qtmodeltester.check(model)
+
+    # confirm that font data loaded appropriately
+    assert model._h_header == ["(Min, Max) [Default]", "Edit Values"]
+    assert model.ordered_axis_tags == ["MONO", "CASL", "wght", "slnt", "CRSV"]
+    assert model._v_header == ["MONO", "CASL", "wght", "slnt", "CRSV"]
+    assert model.fvar_axes == {
+        "MONO": [0.0, 0.0, 1.0],
+        "CASL": [0.0, 0.0, 1.0],
+        "wght": [300.0, 300.0, 1000.0],
+        "slnt": [-15.0, 0.0, 0.0],
+        "CRSV": [0.0, 0.5, 1.0],
+    }
+    assert model._data == [
+        ["(0.0, 1.0) [0.0]", ""],
+        ["(0.0, 1.0) [0.0]", ""],
+        ["(300.0, 1000.0) [300.0]", ""],
+        ["(-15.0, 0.0) [0.0]", ""],
+        ["(0.0, 1.0) [0.5]", ""],
+    ]
+
+
+def test_designaxis_model_filled_woff(qtbot, qtmodeltester):
+    tableview = QTableView()
+    model = DesignAxisModel()
+    tableview.setModel(model)
+    qtbot.addWidget(tableview)
+    model.load_font(get_font_model_woff())
+
+    # test with qtmodeltester
+    qtmodeltester.check(model)
+
+    # confirm that font data loaded appropriately
+    assert model._h_header == ["(Min, Max) [Default]", "Edit Values"]
+    assert model.ordered_axis_tags == ["MONO", "CASL", "wght", "slnt", "CRSV"]
+    assert model._v_header == ["MONO", "CASL", "wght", "slnt", "CRSV"]
+    assert model.fvar_axes == {
+        "MONO": [0.0, 0.0, 1.0],
+        "CASL": [0.0, 0.0, 1.0],
+        "wght": [300.0, 300.0, 1000.0],
+        "slnt": [-15.0, 0.0, 0.0],
+        "CRSV": [0.0, 0.5, 1.0],
+    }
+    assert model._data == [
+        ["(0.0, 1.0) [0.0]", ""],
+        ["(0.0, 1.0) [0.0]", ""],
+        ["(300.0, 1000.0) [300.0]", ""],
+        ["(-15.0, 0.0) [0.0]", ""],
+        ["(0.0, 1.0) [0.5]", ""],
+    ]
+
+
+def test_designaxis_model_filled_woff2(qtbot, qtmodeltester):
+    tableview = QTableView()
+    model = DesignAxisModel()
+    tableview.setModel(model)
+    qtbot.addWidget(tableview)
+    model.load_font(get_font_model_woff2())
 
     # test with qtmodeltester
     qtmodeltester.check(model)
