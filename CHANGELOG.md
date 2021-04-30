@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.6.0
+
+- add woff font format support
+- add woff2 font format support
+- add zopfli package dependency @ v0.1.8
+- add brotli package dependency @ v1.0.9
+
 ## v0.5.1
 
 - Fix: Application crash when a user attempts to enter invalid axis value data
