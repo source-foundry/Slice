@@ -1,4 +1,4 @@
 PyQt5
-fontTools
+fontTools[woff]
 # https://github.com/pyinstaller/pyinstaller/archive/develop.tar.gz
 pyinstaller
