@@ -17,7 +17,7 @@
 ;   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #define BUILDPATH "..\..\dist\Slice.exe"
-#define SliceVersion "0.5.1"
+#define SliceVersion "0.6.0"
 
 [Setup]
 AppName=Slice
