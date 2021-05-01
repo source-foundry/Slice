@@ -45,7 +45,8 @@ class SliceOpenFileDialog(QFileDialog):
             self,
             "Open File",
             self.root_directory,
-            "All Files (*);;ttf Files(*.ttf);;otf Files (*.otf)",
+            "All Files (*);;ttf Files(*.ttf);;otf Files (*.otf);;"
+            "woff Files (*.woff);;woff2 Files (*.woff2)",
             options=self.Options(),
         )
 
@@ -74,7 +75,8 @@ class SliceSaveFileDialog(QFileDialog):
             self,
             "Save File",
             self.root_directory,
-            "All Files (*);;ttf Files(*.ttf);;otf Files (*.otf)",
+            "All Files (*);;ttf Files(*.ttf);;otf Files (*.otf);;"
+            "woff Files (*.woff);;woff2 Files (*.woff2)",
             options=self.Options(),
         )
 
