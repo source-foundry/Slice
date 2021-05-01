@@ -66,6 +66,12 @@ class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        # get the user screen dimensions for UI layout
+        self.screen_dimensions = QDesktopWidget().screenGeometry(0)
+        print(
+            f"Screen dimensions: {self.screen_dimensions.height()}, {self.screen_dimensions.width()}"
+        )
+
         # default FontModel
         self.font_model = FontModel(None)
 
@@ -232,31 +238,33 @@ class MainWindow(QMainWindow):
     #
 
     def setUIAppIconTitle(self):
-        recursive_id = QFontDatabase.addApplicationFont(":/font/RecursiveSans.ttf")
-        font_family = QFontDatabase.applicationFontFamilies(recursive_id)[0]
-        recursive = QFont(font_family)
-        outerHBox = QHBoxLayout()
-        titleLabel = QLabel("<h1>Slice</h1>")
-        titleLabel.setStyleSheet("QLabel { font-size: 36px;}")
-        titleLabel.setFont(recursive)
-        titleLabel.setAlignment(Qt.AlignLeft | Qt.AlignBottom)
-        iconLabel = QLabel()
-        # note: commented block below shows how to use
-        #       svg embedded as a Python string literal
-        #       for QImage instantiation. The current
-        #       approach is better
-        # svg_bytes = bytearray(svg_icon, encoding="utf-8")
-        # qimage = QImage.fromData(svg_bytes)
-        qimage = QImage(":/img/slice-icon.svg")
-        pixmap = QPixmap.fromImage(qimage)
-        iconLabel.setPixmap(pixmap)
-        iconLabel.setFixedHeight(60)
-        iconLabel.setFixedWidth(75)
-        outerHBox.addWidget(iconLabel)
-        outerHBox.addWidget(titleLabel)
+        # add the app logo and name view if screen dimensions permit it
+        if self.screen_dimensions.height() >= 1000:
+            recursive_id = QFontDatabase.addApplicationFont(":/font/RecursiveSans.ttf")
+            font_family = QFontDatabase.applicationFontFamilies(recursive_id)[0]
+            recursive = QFont(font_family)
+            outerHBox = QHBoxLayout()
+            titleLabel = QLabel("<h1>Slice</h1>")
+            titleLabel.setStyleSheet("QLabel { font-size: 36px;}")
+            titleLabel.setFont(recursive)
+            titleLabel.setAlignment(Qt.AlignLeft | Qt.AlignBottom)
+            iconLabel = QLabel()
+            # note: commented block below shows how to use
+            #       svg embedded as a Python string literal
+            #       for QImage instantiation. The current
+            #       approach is better
+            # svg_bytes = bytearray(svg_icon, encoding="utf-8")
+            # qimage = QImage.fromData(svg_bytes)
+            qimage = QImage(":/img/slice-icon.svg")
+            pixmap = QPixmap.fromImage(qimage)
+            iconLabel.setPixmap(pixmap)
+            iconLabel.setFixedHeight(60)
+            iconLabel.setFixedWidth(75)
+            outerHBox.addWidget(iconLabel)
+            outerHBox.addWidget(titleLabel)
 
-        # add widget to main layout
-        self.main_layout.addLayout(outerHBox)
+            # add widget to main layout
+            self.main_layout.addLayout(outerHBox)
 
     #
     # Font path free text entry field view (with DnD support)
@@ -443,7 +451,11 @@ class MainWindow(QMainWindow):
         self.main_layout.addStretch()
 
     def setWindowCenterPosition(self):
-        self.setGeometry(0, 0, 850, 900)
+        # scale dimensions based upon available display size
+        if self.screen_dimensions.height() >= 1000:
+            self.setGeometry(0, 0, 850, 900)
+        else:
+            self.setGeometry(0, 0, 850, 750)
         rect = self.frameGeometry()
         centerCoord = QDesktopWidget().availableGeometry().center()
         rect.moveCenter(centerCoord)
