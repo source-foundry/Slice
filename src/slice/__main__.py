@@ -59,7 +59,7 @@ from .ui.dialogs import (
 )
 from .ui.widgets import DragDropLineEdit
 
-__VERSION__ = "0.6.0"
+__VERSION__ = "0.6.1"
 
 
 class MainWindow(QMainWindow):
