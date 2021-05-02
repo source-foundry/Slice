@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6.1
+
+- Updated: add woff and woff2 file extension filters in the Save and Open File dialog windows
+- Fix: Adjust app size for display height
+
 ## v0.6.0
 
 - add woff font format support
