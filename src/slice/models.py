@@ -200,7 +200,7 @@ class DesignAxisModel(SliceBaseTableModel):
         ]
         self._h_header = ["Min : Max [Default]", "Edit Values"]
         self.axis_range_regex = re.compile(
-            r"(?P<start>\d+(\.\d+)?)\s*\:\s*(?P<end>\d+(\.\d+)?)\s*(\[\s*(?P<default>\d+(\.?\d+)?)\s*\])?"
+            r"(?P<start>\-?\d+(\.\d+)?)\s*\:\s*(?P<end>\-?\d+(\.\d+)?)\s*(\[\s*(?P<default>\-?\d+(\.?\d+)?)\s*\])?"
         )
 
     def data(self, index, role):
