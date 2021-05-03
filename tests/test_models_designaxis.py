@@ -39,7 +39,7 @@ def test_designaxis_model_filled(qtbot, qtmodeltester):
     qtmodeltester.check(model)
 
     # confirm that font data loaded appropriately
-    assert model._h_header == ["(Min, Max) [Default]", "Edit Values"]
+    assert model._h_header == ["Min : Max [Default]", "Edit Values"]
     assert model.ordered_axis_tags == ["MONO", "CASL", "wght", "slnt", "CRSV"]
     assert model._v_header == ["MONO", "CASL", "wght", "slnt", "CRSV"]
     assert model.fvar_axes == {
@@ -50,11 +50,11 @@ def test_designaxis_model_filled(qtbot, qtmodeltester):
         "CRSV": [0.0, 0.5, 1.0],
     }
     assert model._data == [
-        ["(0.0, 1.0) [0.0]", ""],
-        ["(0.0, 1.0) [0.0]", ""],
-        ["(300.0, 1000.0) [300.0]", ""],
-        ["(-15.0, 0.0) [0.0]", ""],
-        ["(0.0, 1.0) [0.5]", ""],
+        ["0.0 : 1.0 [0.0]", ""],
+        ["0.0 : 1.0 [0.0]", ""],
+        ["300.0 : 1000.0 [300.0]", ""],
+        ["-15.0 : 0.0 [0.0]", ""],
+        ["0.0 : 1.0 [0.5]", ""],
     ]
 
 
@@ -69,7 +69,7 @@ def test_designaxis_model_filled_woff(qtbot, qtmodeltester):
     qtmodeltester.check(model)
 
     # confirm that font data loaded appropriately
-    assert model._h_header == ["(Min, Max) [Default]", "Edit Values"]
+    assert model._h_header == ["Min : Max [Default]", "Edit Values"]
     assert model.ordered_axis_tags == ["MONO", "CASL", "wght", "slnt", "CRSV"]
     assert model._v_header == ["MONO", "CASL", "wght", "slnt", "CRSV"]
     assert model.fvar_axes == {
@@ -80,11 +80,11 @@ def test_designaxis_model_filled_woff(qtbot, qtmodeltester):
         "CRSV": [0.0, 0.5, 1.0],
     }
     assert model._data == [
-        ["(0.0, 1.0) [0.0]", ""],
-        ["(0.0, 1.0) [0.0]", ""],
-        ["(300.0, 1000.0) [300.0]", ""],
-        ["(-15.0, 0.0) [0.0]", ""],
-        ["(0.0, 1.0) [0.5]", ""],
+        ["0.0 : 1.0 [0.0]", ""],
+        ["0.0 : 1.0 [0.0]", ""],
+        ["300.0 : 1000.0 [300.0]", ""],
+        ["-15.0 : 0.0 [0.0]", ""],
+        ["0.0 : 1.0 [0.5]", ""],
     ]
 
 
@@ -99,7 +99,7 @@ def test_designaxis_model_filled_woff2(qtbot, qtmodeltester):
     qtmodeltester.check(model)
 
     # confirm that font data loaded appropriately
-    assert model._h_header == ["(Min, Max) [Default]", "Edit Values"]
+    assert model._h_header == ["Min : Max [Default]", "Edit Values"]
     assert model.ordered_axis_tags == ["MONO", "CASL", "wght", "slnt", "CRSV"]
     assert model._v_header == ["MONO", "CASL", "wght", "slnt", "CRSV"]
     assert model.fvar_axes == {
@@ -110,11 +110,11 @@ def test_designaxis_model_filled_woff2(qtbot, qtmodeltester):
         "CRSV": [0.0, 0.5, 1.0],
     }
     assert model._data == [
-        ["(0.0, 1.0) [0.0]", ""],
-        ["(0.0, 1.0) [0.0]", ""],
-        ["(300.0, 1000.0) [300.0]", ""],
-        ["(-15.0, 0.0) [0.0]", ""],
-        ["(0.0, 1.0) [0.5]", ""],
+        ["0.0 : 1.0 [0.0]", ""],
+        ["0.0 : 1.0 [0.0]", ""],
+        ["300.0 : 1000.0 [300.0]", ""],
+        ["-15.0 : 0.0 [0.0]", ""],
+        ["0.0 : 1.0 [0.5]", ""],
     ]
 
 
@@ -245,7 +245,7 @@ def test_designaxis_model_subspace_data_validates_includes_default(qtbot):
     qtbot.addWidget(tableview)
     model.load_font(get_font_model())
 
-    # all values include the default axis value in range
+    # all values include the default axis value (300) in range
     passing_values = (
         [100, 300],
         [200, 400],
@@ -272,6 +272,100 @@ def test_designaxis_model_subspace_data_validates_includes_default(qtbot):
     for failing_value in failing_values:
         with pytest.raises(ValueError):
             model.subspace_data_validates_includes_default_value(failing_value, "wght")
+
+
+def test_designaxis_model_parse_subspace_range_pass(qtbot):
+    tableview = QTableView()
+    model = DesignAxisModel()
+    tableview.setModel(model)
+    qtbot.addWidget(tableview)
+    model.load_font(get_font_model())
+
+    # The following list includes valid, supported axis range
+    # restriction values for the requested syntax `min_val:max_val [default_val]`
+    # the test font includes wght axis range with 300 default value
+    # this must be included in the range until L4 sub-spacing support
+    # is added
+    passing_values = [
+        ("100:300", (100.0, 300.0), None),
+        ("100 : 300", (100.0, 300.0), None),
+        (" 100 : 300 ", (100.0, 300.0), None),
+        ("300:100", (100.0, 300.0), None),
+        ("300 : 100", (100.0, 300.0), None),
+        (" 300 : 100 ", (100.0, 300.0), None),
+        ("100.0:300.0", (100.0, 300.0), None),
+        ("100.0 : 300.0", (100.0, 300.0), None),
+        (" 100.0 : 300.0 ", (100.0, 300.0), None),
+        ("100:300 [300]", (100.0, 300.0), "300"),
+        ("100 : 300 [300]", (100.0, 300.0), "300"),
+        (" 100 : 300 [ 300 ]", (100.0, 300.0), "300"),
+        ("100.0:300.0 [300.0]", (100.0, 300.0), "300.0"),
+        ("100.0 : 300.0 [300.0]", (100.0, 300.0), "300.0"),
+        (" 100.0 : 300.0 [300.0]", (100.0, 300.0), "300.0"),
+        ("100.0:300.0 [ 300.0 ]", (100.0, 300.0), "300.0"),
+        ("300.0:100.0 [ 300.0 ]", (100.0, 300.0), "300.0"),
+        ("300:100 [ 300 ]", (100.0, 300.0), "300"),
+        # the following is not recommended because default will not match in the future
+        ("(100:300)", (100.0, 300.0), None),
+    ]
+
+    for passing_value in passing_values:
+        match = model.parse_subspace_range(passing_value[0], "wght")
+        # range should match tuple
+        assert match[0] == passing_value[1]
+        # default value should match string
+        assert match[1] == passing_value[2]
+
+
+def test_designaxis_model_parse_subspace_range_fail_invalid_syntax(qtbot):
+    tableview = QTableView()
+    model = DesignAxisModel()
+    tableview.setModel(model)
+    qtbot.addWidget(tableview)
+    model.load_font(get_font_model())
+
+    # The following list includes invalid values that
+    # raise errors during execution
+    failing_values = [
+        # invalid syntax
+        "100,300",
+        "(100,300)",
+        "100,300 [300]",
+        "(100,300) [300]",
+        # invalid types
+        "100:bogus",
+        "bogus:100",
+    ]
+
+    for failing_value in failing_values:
+        with pytest.raises(ValueError):
+            model.parse_subspace_range(failing_value, "wght")
+
+
+def test_designaxis_model_parse_subspace_range_fail_invalid_range_without_default(qtbot):
+    tableview = QTableView()
+    model = DesignAxisModel()
+    tableview.setModel(model)
+    qtbot.addWidget(tableview)
+    model.load_font(get_font_model())
+
+    # The following list includes invalid values that
+    # raise errors during execution b/c axis default not in range
+    # this applies until L4 support is available
+    failing_values = [
+        "100:200",
+        "400:700",
+        "100.0:299.9",
+        "300.1:400.0",
+        "100:299.9",
+        "300.1:700",
+        "200:100",
+        "299.9 : 100.0",
+    ]
+
+    for failing_value in failing_values:
+        with pytest.raises(ValueError):
+            model.parse_subspace_range(failing_value, "wght")
 
 
 def test_designaxis_model_get_number_of_axes(qtbot):
