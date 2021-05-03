@@ -281,6 +281,8 @@ class DesignAxisModel(SliceBaseTableModel):
                 # if user did not define the axis value, then
                 # it remains a variable axis
                 pass
+            elif ":" in axis_value:
+                instance_data[axistag] = self.parse_subspace_range(axis_value, axistag)
             else:
                 # else use the numeric value set in the editor
                 try:
@@ -292,6 +294,44 @@ class DesignAxisModel(SliceBaseTableModel):
                     )
 
         return instance_data
+
+    def parse_subspace_range(self, range_string, axistag):
+        range_list = range_string.split(":")
+        # expect 2 values: min and max range sub-space values
+        # formatted as `value1:value2`
+        if len(range_list) != 2:
+            raise ValueError(
+                f"{range_string} is not a valid axis range. "
+                f"Use the format `min_value:max_value`"
+            )
+        # remove any extraneous whitespace (e.g., "100 : 200" entry)
+        # before attempt to cast to a float
+        try:
+            range_list[0] = float(range_list[0].strip())
+            range_list[1] = float(range_list[1].strip())
+        except ValueError as e:
+            raise ValueError(f"{range_string} is not a valid axis value range. {e}")
+        # order the values in case they were entered in reverse
+        # e.g., 800:400, not 400:800
+        sorted_range_list = sorted(range_list)
+        # We only support Level 3 sub-spacing due to the support
+        # that is available in fontTools lib.  Let's check that user
+        # included the default axis value in the range request
+        self.subspace_data_validates_includes_default_value(sorted_range_list, axistag)
+        # all seems well, return data formatted as tuple
+        # this is the data format required by fonttools lib
+        return (sorted_range_list[0], sorted_range_list[1])
+
+    def subspace_data_validates_includes_default_value(self, range_list, axistag):
+        """Validates Level 3 sub-space requirement that restricted axis range
+        includes the default axis value."""
+        default = self.get_default_axis_value(axistag)
+        if default < range_list[0] or default > range_list[1]:
+            raise ValueError(
+                f"{axistag} range {range_list[0]}:{range_list[1]} does not "
+                f"include the default axis value.  This is currently a "
+                f"requirement."
+            )
 
     def instance_data_validates_missing_data(self):
         # validator that returns True if there is at least one
