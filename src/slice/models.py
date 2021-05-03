@@ -196,7 +196,7 @@ class DesignAxisModel(SliceBaseTableModel):
             "Axis 4",
             "Axis 5",
         ]
-        self._h_header = ["(Min, Max) [Default]", "Edit Values"]
+        self._h_header = ["Min : Max [Default]", "Edit Values"]
 
     def data(self, index, role):
         if role in (Qt.DisplayRole, Qt.EditRole):
@@ -210,6 +210,9 @@ class DesignAxisModel(SliceBaseTableModel):
             return self._v_header[section]
         elif orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return self._h_header[section]
+
+        if orientation == Qt.Vertical and role == Qt.TextAlignmentRole:
+            return Qt.AlignCenter
 
         # add full registered axis strings in tooltips
         if role == Qt.ToolTipRole:
@@ -254,7 +257,7 @@ class DesignAxisModel(SliceBaseTableModel):
                 axis.maxValue,
             ]
             new_data.append(
-                [f"({axis.minValue}, {axis.maxValue}) [{axis.defaultValue}]", ""]
+                [f"{axis.minValue} : {axis.maxValue} [{axis.defaultValue}]", ""]
             )
             # use the axisID to locate the axis name in the name table
             # if it does not exist, the getName method returns None
