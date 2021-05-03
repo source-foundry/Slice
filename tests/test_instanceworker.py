@@ -258,7 +258,7 @@ def test_instanceworker_instantiate_ttfont_and_gen_with_no_user_axis_defs_woff2_
     assert "CRSV" in axis_tags
 
 
-def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_one_axis(tmpdir):
+def test_instanceworker_instantiate_ttfont_and_gen_subspace_one_axis(tmpdir):
     # When there are
     outpath = str(tmpdir.join("test.ttf"))
     font_model = get_font_model()
@@ -310,7 +310,7 @@ def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_one_axis(tmp
     assert "CRSV" not in axis_tags
 
 
-def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_one_axis_woff(tmpdir):
+def test_instanceworker_instantiate_ttfont_and_gen_subspace_one_axis_woff(tmpdir):
     # When there are
     outpath = str(tmpdir.join("test.ttf"))
     font_model = get_font_model_woff()
@@ -364,7 +364,7 @@ def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_one_axis_wof
     assert "CRSV" not in axis_tags
 
 
-def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_one_axis_woff2(
+def test_instanceworker_instantiate_ttfont_and_gen_subspace_one_axis_woff2(
     tmpdir,
 ):
     # When there are
@@ -420,7 +420,7 @@ def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_one_axis_wof
     assert "CRSV" not in axis_tags
 
 
-def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_multi_axis(tmpdir):
+def test_instanceworker_instantiate_ttfont_and_gen_subspace_multi_axis(tmpdir):
     outpath = str(tmpdir.join("test.ttf"))
     font_model = get_font_model()
 
@@ -470,7 +470,7 @@ def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_multi_axis(t
     assert "CRSV" not in axis_tags
 
 
-def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_multi_axis_woff(
+def test_instanceworker_instantiate_ttfont_and_gen_subspace_multi_axis_woff(
     tmpdir,
 ):
     outpath = str(tmpdir.join("test.ttf"))
@@ -524,7 +524,7 @@ def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_multi_axis_w
     assert "CRSV" not in axis_tags
 
 
-def test_instanceworker_instantiate_ttfont_and_gen_partial_instance_multi_axis_woff2(
+def test_instanceworker_instantiate_ttfont_and_gen_subspace_multi_axis_woff2(
     tmpdir,
 ):
     outpath = str(tmpdir.join("test.ttf"))
