@@ -13,6 +13,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Slice.  If not, see <https://www.gnu.org/licenses/>.
 
+import re
+
 from fontTools.ttLib import TTFont
 from PyQt5.QtCore import QAbstractTableModel, Qt
 
@@ -197,6 +199,9 @@ class DesignAxisModel(SliceBaseTableModel):
             "Axis 5",
         ]
         self._h_header = ["Min : Max [Default]", "Edit Values"]
+        self.axis_range_regex = re.compile(
+            r"(?P<start>\d+(\.\d+)?)\s*\:\s*(?P<end>\d+(\.\d+)?)\s*(\[\s*(?P<default>\d+(\.?\d+)?)\s*\])?"
+        )
 
     def data(self, index, role):
         if role in (Qt.DisplayRole, Qt.EditRole):
@@ -285,7 +290,10 @@ class DesignAxisModel(SliceBaseTableModel):
                 # it remains a variable axis
                 pass
             elif ":" in axis_value:
-                instance_data[axistag] = self.parse_subspace_range(axis_value, axistag)
+                subspace_range = self.parse_subspace_range(axis_value, axistag)[0]
+                # for future L4 sub-space support
+                # subspace_default = self.parse_subspace_range(axis_value, axistag)[1]
+                instance_data[axistag] = subspace_range
             else:
                 # else use the numeric value set in the editor
                 try:
@@ -299,31 +307,47 @@ class DesignAxisModel(SliceBaseTableModel):
         return instance_data
 
     def parse_subspace_range(self, range_string, axistag):
-        range_list = range_string.split(":")
-        # expect 2 values: min and max range sub-space values
-        # formatted as `value1:value2`
-        if len(range_list) != 2:
+        match = self.axis_range_regex.search(range_string)
+
+        # confirm that we match on the regular expression parser
+        # and that there will be group methods to execute on the regex
+        if not match:
             raise ValueError(
-                f"{range_string} is not a valid axis range. "
-                f"Use the format `min_value:max_value`"
+                f"{range_string} is not a valid axis range definition for {axistag}."
             )
-        # remove any extraneous whitespace (e.g., "100 : 200" entry)
-        # before attempt to cast to a float
+
+        start_string = match.group("start")
+        end_string = match.group("end")
+        default_string = match.group("default")
+
+        if not start_string or not end_string:
+            raise ValueError(
+                f"{range_string} is not a valid axis range definition for {axistag}."
+            )
+
+        float_range_list = []
+
+        # cast to float with numeric type validations
         try:
-            range_list[0] = float(range_list[0].strip())
-            range_list[1] = float(range_list[1].strip())
-        except ValueError as e:
-            raise ValueError(f"{range_string} is not a valid axis value range. {e}")
-        # order the values in case they were entered in reverse
+            float_range_list.append(float(start_string))
+        except ValueError:
+            raise ValueError(f"{start_string} is not a valid axis value for {axistag}.")
+
+        try:
+            float_range_list.append(float(end_string))
+        except ValueError:
+            raise ValueError(f"{end_string} is not a valid axis value for {axistag}.")
+        # sort the values in case they were entered in reverse numeric order
         # e.g., 800:400, not 400:800
-        sorted_range_list = sorted(range_list)
-        # We only support Level 3 sub-spacing due to the support
+        sorted_range_list = sorted(float_range_list)
+        # We only support Level 3 sub-spacing now due to the support
         # that is available in fontTools lib.  Let's check that user
         # included the default axis value in the range request
         self.subspace_data_validates_includes_default_value(sorted_range_list, axistag)
-        # all seems well, return data formatted as tuple
-        # this is the data format required by fonttools lib
-        return (sorted_range_list[0], sorted_range_list[1])
+        # return the tuple range required for L3 support at index 0
+        # return the default value (currently as string or None) required for
+        # (future) L4 support at index 1
+        return ((sorted_range_list[0], sorted_range_list[1]), default_string)
 
     def subspace_data_validates_includes_default_value(self, range_list, axistag):
         """Validates Level 3 sub-space requirement that restricted axis range
