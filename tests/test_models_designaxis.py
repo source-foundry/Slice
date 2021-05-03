@@ -316,6 +316,29 @@ def test_designaxis_model_parse_subspace_range_pass(qtbot):
         # default value should match string
         assert match[1] == passing_value[2]
 
+    negative_values = [
+        # negative values on slnt axis
+        ("-10:0", (-10.0, 0.0), None),
+        ("-10.0:0", (-10.0, 0.0), None),
+        ("-10 : 0", (-10.0, 0.0), None),
+        # mock negative max end using signed zero
+        ("-10:-0", (-10.0, -0.0), None),
+        ("-10.0:-0.0", (-10.0, -0.0), None),
+        ("-10.0 : -0.0", (-10.0, -0.0), None),
+        # test negative default
+        ("-10:-0 [-5]", (-10.0, -0.0), "-5"),
+        ("-10:-0 [ -5 ]", (-10.0, -0.0), "-5"),
+        ("-10.0 : -0.0 [ -5.0 ]", (-10.0, -0.0), "-5.0"),
+    ]
+
+    for negative_value in negative_values:
+        # switch to slnt axis for these tests
+        match = model.parse_subspace_range(negative_value[0], "slnt")
+        # range should match tuple
+        assert match[0] == negative_value[1]
+        # default value should match string
+        assert match[1] == negative_value[2]
+
 
 def test_designaxis_model_parse_subspace_range_fail_invalid_syntax(qtbot):
     tableview = QTableView()
