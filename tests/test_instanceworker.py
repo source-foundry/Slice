@@ -812,22 +812,28 @@ def test_instanceworker_instantiate_ttfont_and_gen_restricted_and_unrestricted_s
     assert "CRSV" in axis_tags
 
     # get the axis data to confirm that we have a proper restricted axis range
+    tested_axes = []
     for axis in iw.ttfont["fvar"].axes:
         # full range vs. original
         if axis.axisTag == "MONO":
             assert axis.minValue == 0.0
             assert axis.maxValue == 1.0
             assert axis.defaultValue == 0.0
+            tested_axes.append("MONO")
         # restricted range vs. original
         if axis.axisTag == "wght":
             assert axis.minValue == 200.0
             assert axis.maxValue == 400.0
             assert axis.defaultValue == 300.0
+            tested_axes.append("wght")
         # restricted range vs. original
         if axis.axisTag == "CRSV":
             assert axis.minValue == 0.0
             assert axis.maxValue == 0.5
             assert axis.defaultValue == 0.5
+            tested_axes.append("CRSV")
+
+    assert tested_axes == ["MONO", "wght", "CRSV"]
 
 
 def test_instanceworker_instantiate_ttfont_raises_valueerror_on_invalid_data(tmpdir):
