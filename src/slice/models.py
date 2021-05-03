@@ -328,8 +328,8 @@ class DesignAxisModel(SliceBaseTableModel):
         default = self.get_default_axis_value(axistag)
         if default < range_list[0] or default > range_list[1]:
             raise ValueError(
-                f"{axistag} range {range_list[0]}:{range_list[1]} does not "
-                f"include the default axis value.  This is currently a "
+                f"The {axistag} range {range_list[0]}:{range_list[1]} does not "
+                f"include the default axis value ({default}).  This is currently a "
                 f"requirement."
             )
 
