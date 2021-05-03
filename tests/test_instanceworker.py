@@ -310,6 +310,65 @@ def test_instanceworker_instantiate_ttfont_and_gen_subspace_one_axis(tmpdir):
     assert "CRSV" not in axis_tags
 
 
+def test_instanceworker_instantiate_ttfont_and_gen_restricted_subspace_one_axis(tmpdir):
+    # When there are
+    outpath = str(tmpdir.join("test.ttf"))
+    font_model = get_font_model()
+
+    axis_model = DesignAxisModel()
+    axis_model.load_font(font_model)
+    # "wght" axis defined at restricted range of 200:400
+    axis_model._data[0][1] = "1"
+    axis_model._data[1][1] = "0"
+    axis_model._data[2][1] = "200:400"
+    axis_model._data[3][1] = "0"
+    axis_model._data[4][1] = "0.5"
+
+    name_model = FontNameModel()
+    name_model.load_font(font_model)
+
+    bit_model = FontBitFlagModel(
+        get_os2_default_dict_true(), get_head_default_dict_true()
+    )
+
+    iw = InstanceWorker(
+        outpath,
+        font_model,
+        axis_model,
+        name_model,
+        bit_model,
+    )
+
+    assert iw.ttfont is None
+    # the ttfont attribute is set with this method
+    iw.instantiate_ttfont()
+    assert type(iw.ttfont) is TTFont
+    # it is a variable font and should have an fvar table
+    assert "fvar" in iw.ttfont
+
+    # after instantiation of the partial, fvar should still be present
+    iw.instantiate_variable_font()
+    assert "fvar" in iw.ttfont
+    # in the test font, the "wght" axis should still be variable
+    # with the variable setting that was used above
+    # make list of axis tags
+    axis_tags = [axis.axisTag for axis in iw.ttfont["fvar"].axes]
+    # the font should include a variable MONO axis, all others
+    # should have been sliced
+    assert "MONO" not in axis_tags
+    assert "CASL" not in axis_tags
+    assert "wght" in axis_tags
+    assert "slnt" not in axis_tags
+    assert "CRSV" not in axis_tags
+
+    # get the axis data to confirm that we have a proper restricted axis range
+    for axis in iw.ttfont["fvar"].axes:
+        if axis.axisTag == "wght":
+            assert axis.minValue == 200
+            assert axis.maxValue == 400
+            assert axis.defaultValue == 300
+
+
 def test_instanceworker_instantiate_ttfont_and_gen_subspace_one_axis_woff(tmpdir):
     # When there are
     outpath = str(tmpdir.join("test.ttf"))
@@ -362,6 +421,67 @@ def test_instanceworker_instantiate_ttfont_and_gen_subspace_one_axis_woff(tmpdir
     assert "wght" not in axis_tags
     assert "slnt" not in axis_tags
     assert "CRSV" not in axis_tags
+
+
+def test_instanceworker_instantiate_ttfont_and_gen_restricted_subspace_one_axis_woff(
+    tmpdir,
+):
+    # When there are
+    outpath = str(tmpdir.join("test.ttf"))
+    font_model = get_font_model_woff()
+
+    axis_model = DesignAxisModel()
+    axis_model.load_font(font_model)
+    # "wght" axis defined at restricted range of 200:400
+    axis_model._data[0][1] = "1"
+    axis_model._data[1][1] = "0"
+    axis_model._data[2][1] = "200:400"
+    axis_model._data[3][1] = "0"
+    axis_model._data[4][1] = "0.5"
+
+    name_model = FontNameModel()
+    name_model.load_font(font_model)
+
+    bit_model = FontBitFlagModel(
+        get_os2_default_dict_true(), get_head_default_dict_true()
+    )
+
+    iw = InstanceWorker(
+        outpath,
+        font_model,
+        axis_model,
+        name_model,
+        bit_model,
+    )
+
+    assert iw.ttfont is None
+    # the ttfont attribute is set with this method
+    iw.instantiate_ttfont()
+    assert type(iw.ttfont) is TTFont
+    # it is a variable font and should have an fvar table
+    assert "fvar" in iw.ttfont
+
+    # after instantiation of the partial, fvar should still be present
+    iw.instantiate_variable_font()
+    assert "fvar" in iw.ttfont
+    # in the test font, the "wght" axis should still be variable
+    # with the variable setting that was used above
+    # make list of axis tags
+    axis_tags = [axis.axisTag for axis in iw.ttfont["fvar"].axes]
+    # the font should include a variable MONO axis, all others
+    # should have been sliced
+    assert "MONO" not in axis_tags
+    assert "CASL" not in axis_tags
+    assert "wght" in axis_tags
+    assert "slnt" not in axis_tags
+    assert "CRSV" not in axis_tags
+
+    # get the axis data to confirm that we have a proper restricted axis range
+    for axis in iw.ttfont["fvar"].axes:
+        if axis.axisTag == "wght":
+            assert axis.minValue == 200
+            assert axis.maxValue == 400
+            assert axis.defaultValue == 300
 
 
 def test_instanceworker_instantiate_ttfont_and_gen_subspace_one_axis_woff2(
@@ -418,6 +538,67 @@ def test_instanceworker_instantiate_ttfont_and_gen_subspace_one_axis_woff2(
     assert "wght" not in axis_tags
     assert "slnt" not in axis_tags
     assert "CRSV" not in axis_tags
+
+
+def test_instanceworker_instantiate_ttfont_and_gen_restricted_subspace_one_axis_woff2(
+    tmpdir,
+):
+    # When there are
+    outpath = str(tmpdir.join("test.ttf"))
+    font_model = get_font_model_woff2()
+
+    axis_model = DesignAxisModel()
+    axis_model.load_font(font_model)
+    # "wght" axis defined at restricted range of 200:400
+    axis_model._data[0][1] = "1"
+    axis_model._data[1][1] = "0"
+    axis_model._data[2][1] = "200:400"
+    axis_model._data[3][1] = "0"
+    axis_model._data[4][1] = "0.5"
+
+    name_model = FontNameModel()
+    name_model.load_font(font_model)
+
+    bit_model = FontBitFlagModel(
+        get_os2_default_dict_true(), get_head_default_dict_true()
+    )
+
+    iw = InstanceWorker(
+        outpath,
+        font_model,
+        axis_model,
+        name_model,
+        bit_model,
+    )
+
+    assert iw.ttfont is None
+    # the ttfont attribute is set with this method
+    iw.instantiate_ttfont()
+    assert type(iw.ttfont) is TTFont
+    # it is a variable font and should have an fvar table
+    assert "fvar" in iw.ttfont
+
+    # after instantiation of the partial, fvar should still be present
+    iw.instantiate_variable_font()
+    assert "fvar" in iw.ttfont
+    # in the test font, the "wght" axis should still be variable
+    # with the variable setting that was used above
+    # make list of axis tags
+    axis_tags = [axis.axisTag for axis in iw.ttfont["fvar"].axes]
+    # the font should include a variable MONO axis, all others
+    # should have been sliced
+    assert "MONO" not in axis_tags
+    assert "CASL" not in axis_tags
+    assert "wght" in axis_tags
+    assert "slnt" not in axis_tags
+    assert "CRSV" not in axis_tags
+
+    # get the axis data to confirm that we have a proper restricted axis range
+    for axis in iw.ttfont["fvar"].axes:
+        if axis.axisTag == "wght":
+            assert axis.minValue == 200
+            assert axis.maxValue == 400
+            assert axis.defaultValue == 300
 
 
 def test_instanceworker_instantiate_ttfont_and_gen_subspace_multi_axis(tmpdir):
