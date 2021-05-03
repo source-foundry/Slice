@@ -238,6 +238,42 @@ def test_designaxis_model_instance_data_validates_invalid_data(qtbot):
         model.instance_data_validates_missing_data()
 
 
+def test_designaxis_model_subspace_data_validates_includes_default(qtbot):
+    tableview = QTableView()
+    model = DesignAxisModel()
+    tableview.setModel(model)
+    qtbot.addWidget(tableview)
+    model.load_font(get_font_model())
+
+    # all values include the default axis value in range
+    passing_values = (
+        [100, 300],
+        [200, 400],
+        [300, 700],
+        [100.0, 300.0],
+        [200.0, 400.0],
+        [300.0, 700.0],
+    )
+
+    # these should not raise exception
+    for passing_value in passing_values:
+        model.subspace_data_validates_includes_default_value(passing_value, "wght")
+
+    failing_values = [
+        [100, 200],
+        [400, 700],
+        [100.0, 299.9],
+        [300.1, 400.0],
+        [100, 299.9],
+        [300.1, 700],
+    ]
+
+    # these should raise exceptions because default value is not included in range
+    for failing_value in failing_values:
+        with pytest.raises(ValueError):
+            model.subspace_data_validates_includes_default_value(failing_value, "wght")
+
+
 def test_designaxis_model_get_number_of_axes(qtbot):
     tableview = QTableView()
     model = DesignAxisModel()
