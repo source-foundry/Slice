@@ -759,6 +759,77 @@ def test_instanceworker_instantiate_ttfont_and_gen_subspace_multi_axis_woff2(
     assert "CRSV" not in axis_tags
 
 
+def test_instanceworker_instantiate_ttfont_and_gen_restricted_and_unrestricted_subspace_multiaxis(
+    tmpdir,
+):
+    # When there are
+    outpath = str(tmpdir.join("test.ttf"))
+    font_model = get_font_model()
+
+    axis_model = DesignAxisModel()
+    axis_model.load_font(font_model)
+    # "MONO" axis is full range of 0.0 : 1.0
+    # "wght" axis defined at restricted range of 200 : 400
+    # "CRSV" axis is defined at restricted range of 0.0 : 0.5
+    axis_model._data[0][1] = ""
+    axis_model._data[1][1] = "0"
+    axis_model._data[2][1] = "200:400"
+    axis_model._data[3][1] = "0"
+    axis_model._data[4][1] = "0:0.5"
+
+    name_model = FontNameModel()
+    name_model.load_font(font_model)
+
+    bit_model = FontBitFlagModel(
+        get_os2_default_dict_true(), get_head_default_dict_true()
+    )
+
+    iw = InstanceWorker(
+        outpath,
+        font_model,
+        axis_model,
+        name_model,
+        bit_model,
+    )
+
+    assert iw.ttfont is None
+    # the ttfont attribute is set with this method
+    iw.instantiate_ttfont()
+    assert type(iw.ttfont) is TTFont
+    # it is a variable font and should have an fvar table
+    assert "fvar" in iw.ttfont
+
+    # after instantiation of the partial, fvar should still be present
+    iw.instantiate_variable_font()
+    assert "fvar" in iw.ttfont
+    axis_tags = [axis.axisTag for axis in iw.ttfont["fvar"].axes]
+    # the font should include a variable MONO axis, all others
+    # should have been sliced
+    assert "MONO" in axis_tags
+    assert "CASL" not in axis_tags
+    assert "wght" in axis_tags
+    assert "slnt" not in axis_tags
+    assert "CRSV" in axis_tags
+
+    # get the axis data to confirm that we have a proper restricted axis range
+    for axis in iw.ttfont["fvar"].axes:
+        # full range vs. original
+        if axis.axisTag == "MONO":
+            assert axis.minValue == 0.0
+            assert axis.maxValue == 1.0
+            assert axis.defaultValue == 0.0
+        # restricted range vs. original
+        if axis.axisTag == "wght":
+            assert axis.minValue == 200.0
+            assert axis.maxValue == 400.0
+            assert axis.defaultValue == 300.0
+        # restricted range vs. original
+        if axis.axisTag == "CRSV":
+            assert axis.minValue == 0.0
+            assert axis.maxValue == 0.5
+            assert axis.defaultValue == 0.5
+
+
 def test_instanceworker_instantiate_ttfont_raises_valueerror_on_invalid_data(tmpdir):
     outpath = str(tmpdir.join("test.ttf"))
     font_model = get_font_model()
