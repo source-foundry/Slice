@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.7.0
+
+- add support for Level 3 restricted axis range sub-spacing to make fonts that include smaller variable axis ranges, can be defined in combination with other static instance location and full variable axis range axes in the same output font (note: Level 3 support requires the default axis value to be contained in the new, smaller variable axis range)
+- add default zopfli compression on woff file compiles (uses default zopfli compression level 6)
+
 ## v0.6.1
 
 - Updated: add woff and woff2 file extension filters in the Save and Open File dialog windows
