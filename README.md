@@ -2,7 +2,7 @@
 
 ### An open-source application to create custom font design spaces from variable fonts
 
-<img src="https://d33wubrfki0l68.cloudfront.net/d67ed997178c60733041aaaf932bdf9c3afcb63b/fda62/images/slice-hero-crunch.png">
+<img src="https://d33wubrfki0l68.cloudfront.net/faa7cb26d3ad28e0fced37690d416503081be711/10796/images/slice-hero-crunch.png">
 
 ## About
 
