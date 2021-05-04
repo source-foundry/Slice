@@ -581,7 +581,7 @@ class MainWindow(QMainWindow):
             SliceErrorDialog(
                 "You requested the same design space that is supported in the "
                 "font path that you are processing. Please define at least one "
-                "axis value."
+                "axis location or restricted axis range."
             )
         else:
             # validation: confirm that the user did not edit the
