@@ -15,6 +15,22 @@ User docs are available at https://slice-gui.netlify.app/docs/
 - [Installation](https://slice-gui.netlify.app/docs/install/)
 - [Usage](https://slice-gui.netlify.app/docs/usage/)
 
+## Axis definitions
+
+Slice currently supports combinations of the following axis definition types in output fonts:
+
+- Fixed instance locations
+- Level 3 restricted axis ranges (must include original axis default value in the new, smaller axis range)<sup>[[1](#footnote1)]</sup>
+- Full, original variable axis ranges
+
+Define your font axes with the syntax in the table below.
+
+|Axis definition | Axis Editor Syntax  | Example |
+| --- | --- | --- |
+| Fixed axis location| Integer or float value | `400.0` |
+| Restricted axis range | Colon-delimited min:max integer or float range | `200:700` |
+| Full axis range | Leave editor row blank | n/a |
+
 ## Issues
 
 Please file issues on the [project tracker](https://github.com/source-foundry/Slice/issues).
@@ -44,3 +60,8 @@ Please see the [thirdparty directory](https://github.com/source-foundry/Slice/tr
   <a href="https://www.netlify.com">
     <img src="https://www.netlify.com/img/global/badges/netlify-light.svg" alt="Deploys by Netlify" />
   </a>
+
+
+---
+
+<small><a id="footnote1">1</a>: Default axis locations are required to compile valid variable font format files.  The default axis value defined in the original font must be included in the restricted axis range due to the lack of compiler support for default axis location moves during the slicing process. We intend to support default axis location moves when it is possible to do so. [This issue is being tracked on our GitHub tracker](https://github.com/source-foundry/Slice/issues/32).</small>
