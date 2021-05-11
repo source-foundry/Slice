@@ -8,6 +8,11 @@
 
 Slice is an open-source, cross-platform GUI app that generates fonts with custom design sub-spaces from variable font inputs.
 
+## Install
+
+* macOS: [Slice.0.7.0.dmg](https://github.com/source-foundry/Slice/releases/download/v0.7.0/Slice.0.7.0.dmg)
+* Windows: [Slice-0.7.0-Installer.exe](https://github.com/source-foundry/Slice/releases/download/v0.7.0/Slice-0.7.0-Installer.exe)
+
 ## User documentation
 
 User docs are available at https://slice-gui.netlify.app/docs/
