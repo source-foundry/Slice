@@ -5,15 +5,11 @@
 #    pip-compile requirements.in
 #
 altgraph==0.17
-    # via
-    #   macholib
-    #   pyinstaller
+    # via pyinstaller
 brotli==1.0.9
     # via fonttools
-fonttools[woff]==4.22.1
+fonttools[woff]==4.23.0
     # via -r requirements.in
-macholib==1.14
-    # via pyinstaller
 pyinstaller-hooks-contrib==2021.1
     # via pyinstaller
 pyinstaller==4.3
