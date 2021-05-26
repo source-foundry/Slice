@@ -8,7 +8,7 @@ altgraph==0.17
     # via pyinstaller
 brotli==1.0.9
     # via fonttools
-fonttools[woff]==4.23.0
+fonttools[woff]==4.24.4
     # via -r requirements.in
 pyinstaller-hooks-contrib==2021.1
     # via pyinstaller
